@@ -1,0 +1,88 @@
+﻿{
+  "news": [
+    {
+      "title": "OpenAI announces enterprise agent toolkit for workflow automation",
+      "summary": "OpenAI released a new AI agent toolkit focused on enterprise workflow automation and secure deployment, with API integrations for major cloud platforms.",
+      "source": "Fallback Synthetic",
+      "url": "https://example.com/openai-agent-toolkit",
+      "published_at": "2026-04-30T02:00:00+00:00"
+    },
+    {
+      "title": "Google DeepMind publishes new multimodal model benchmark",
+      "summary": "The research benchmark compares multimodal model performance across reasoning, code, and long-context tasks, showing measurable improvements.",
+      "source": "Fallback Synthetic",
+      "url": "https://example.com/deepmind-benchmark",
+      "published_at": "2026-04-30T01:00:00+00:00"
+    },
+    {
+      "title": "欧盟更新人工智能监管框架，强化高风险模型合规",
+      "summary": "欧盟发布最新AI政策草案，要求高风险大模型在数据治理、安全测试和透明度方面提高合规标准。",
+      "source": "Fallback Synthetic",
+      "url": "https://example.com/eu-ai-policy",
+      "published_at": "2026-04-29T20:30:00+00:00"
+    },
+    {
+      "title": "NVIDIA unveils next-gen inference chip targeting lower AI cost",
+      "summary": "NVIDIA announced an inference-focused chip designed to reduce serving cost and improve throughput for large language model deployment.",
+      "source": "Fallback Synthetic",
+      "url": "https://example.com/nvidia-inference-chip",
+      "published_at": "2026-04-29T19:00:00+00:00"
+    },
+    {
+      "title": "国内头部云厂商发布大模型应用平台，主打企业提效",
+      "summary": "新平台提供AI工作流编排、知识库检索与智能体管理，面向金融、零售和制造行业落地场景。",
+      "source": "Fallback Synthetic",
+      "url": "https://example.com/china-ai-platform",
+      "published_at": "2026-04-29T16:20:00+00:00"
+    },
+    {
+      "title": "Anthropic reports improved safety alignment in latest LLM release",
+      "summary": "Anthropic shared safety evaluation results indicating reduced harmful outputs and better refusal behavior in sensitive prompts.",
+      "source": "Fallback Synthetic",
+      "url": "https://example.com/anthropic-safety-release",
+      "published_at": "2026-04-29T14:10:00+00:00"
+    },
+    {
+      "title": "AI startup raises Series B to build healthcare copilots",
+      "summary": "A healthcare AI startup secured new funding to expand clinical documentation copilots and hospital workflow automation.",
+      "source": "Fallback Synthetic",
+      "url": "https://example.com/ai-healthcare-funding",
+      "published_at": "2026-04-29T12:00:00+00:00"
+    },
+    {
+      "title": "研究团队在arXiv发布高效推理论文，降低模型延迟",
+      "summary": "新论文提出推理优化方法，在保持准确率的同时显著降低延迟和GPU占用，适用于大模型在线服务。",
+      "source": "Fallback Synthetic",
+      "url": "https://example.com/arxiv-inference-optimization",
+      "published_at": "2026-04-29T09:00:00+00:00"
+    },
+    {
+      "title": "Major bank expands AI coding assistant to 20,000 developers",
+      "summary": "The bank scaled internal AI coding tools to thousands of engineers, citing productivity gains and faster release cycles.",
+      "source": "Fallback Synthetic",
+      "url": "https://example.com/bank-ai-coding-assistant",
+      "published_at": "2026-04-29T08:00:00+00:00"
+    },
+    {
+      "title": "监管机构调查生成式AI数据使用争议",
+      "summary": "多国监管机构关注生成式AI训练数据来源与版权边界，相关企业面临更高合规审查压力。",
+      "source": "Fallback Synthetic",
+      "url": "https://example.com/regulator-ai-data-probe",
+      "published_at": "2026-04-29T06:30:00+00:00"
+    },
+    {
+      "title": "微软发布面向开发者的Agent SDK更新",
+      "summary": "Microsoft updated its developer Agent SDK with observability and tool-calling improvements for production AI systems.",
+      "source": "Fallback Synthetic",
+      "url": "https://example.com/microsoft-agent-sdk",
+      "published_at": "2026-04-29T05:00:00+00:00"
+    },
+    {
+      "title": "高校与产业联合启动人工智能人才培养计划",
+      "summary": "该计划将围绕大模型工程化、AI安全与行业应用课程展开，预计覆盖数万名学生与工程师。",
+      "source": "Fallback Synthetic",
+      "url": "https://example.com/ai-talent-program",
+      "published_at": "2026-04-29T03:00:00+00:00"
+    }
+  ]
+}

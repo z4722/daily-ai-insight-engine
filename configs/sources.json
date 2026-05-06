@@ -1,0 +1,64 @@
+﻿{
+  "sources": [
+    {
+      "name": "Google News EN",
+      "url": "https://news.google.com/rss/search?q=(AI%20OR%20%22artificial%20intelligence%22%20OR%20LLM)&hl=en-US&gl=US&ceid=US:en",
+      "source_type": "aggregator",
+      "source_weight": 0.78,
+      "source_region": "global",
+      "always_ai": false,
+      "enabled": true,
+      "rationale": "High-coverage English aggregation for broad market and media signal."
+    },
+    {
+      "name": "Google News ZH",
+      "url": "https://news.google.com/rss/search?q=%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%20OR%20%E5%A4%A7%E6%A8%A1%E5%9E%8B&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+      "source_type": "aggregator",
+      "source_weight": 0.78,
+      "source_region": "cn",
+      "always_ai": false,
+      "enabled": true,
+      "rationale": "Chinese-language market and policy discussion signal."
+    },
+    {
+      "name": "TechCrunch AI",
+      "url": "https://techcrunch.com/category/artificial-intelligence/feed/",
+      "source_type": "media",
+      "source_weight": 0.84,
+      "source_region": "us",
+      "always_ai": true,
+      "enabled": true,
+      "rationale": "Product and capital focused AI media stream."
+    },
+    {
+      "name": "arXiv cs.AI",
+      "url": "https://export.arxiv.org/rss/cs.AI",
+      "source_type": "research",
+      "source_weight": 0.86,
+      "source_region": "global",
+      "always_ai": true,
+      "enabled": true,
+      "rationale": "Frontier research and technical trend baseline."
+    },
+    {
+      "name": "OpenAI News",
+      "url": "https://openai.com/news/rss.xml",
+      "source_type": "official",
+      "source_weight": 0.90,
+      "source_region": "global",
+      "always_ai": true,
+      "enabled": true,
+      "rationale": "Official product and policy announcements from a major AI provider."
+    },
+    {
+      "name": "Hacker News AI",
+      "url": "https://hnrss.org/newest?q=AI",
+      "source_type": "social",
+      "source_weight": 0.74,
+      "source_region": "global",
+      "always_ai": false,
+      "enabled": true,
+      "rationale": "Community-level discussion and early signal detection."
+    }
+  ]
+}

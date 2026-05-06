@@ -1,0 +1,277 @@
+{
+  "generated_at": "2026-05-06T10:12:53.604552+00:00",
+  "schema_version": "1.1.0",
+  "sample_count": 20,
+  "dataset_profile": {
+    "source_distribution": {
+      "Hacker News AI": 3,
+      "Google News ZH": 3,
+      "TechCrunch AI": 3,
+      "arXiv cs.AI": 8,
+      "Google News EN": 1,
+      "OpenAI News": 2
+    },
+    "source_type_distribution": {
+      "social": 3,
+      "aggregator": 4,
+      "media": 3,
+      "research": 8,
+      "official": 2
+    },
+    "language_distribution": {
+      "en": 17,
+      "zh": 3
+    },
+    "avg_confidence": 0.946,
+    "avg_impact_score": 93.96,
+    "avg_relevance_score": 5.75,
+    "high_impact_count": 20,
+    "low_confidence_count": 0
+  },
+  "top_events": [
+    {
+      "id": "d93f832545905d5b",
+      "title": "2026 Roadmap on Artificial Intelligence and Machine Learning for Smart Manufacturing",
+      "source": "arXiv cs.AI",
+      "source_type": "research",
+      "source_weight": 0.86,
+      "source_region": "global",
+      "url": "https://arxiv.org/abs/2605.00839",
+      "published_at": "2026-05-06T04:00:00+00:00",
+      "language": "en",
+      "raw_summary": "arXiv:2605.00839v1 Announce Type: new Abstract: The evolution of artificial intelligence (AI) and machine learning (ML) is reshaping smart manufacturing by providing new capabilities for efficiency, adaptability, and autonomy across industrial value chains. However, the deployment of AI and ML in industrial settings still faces critical challenges, including the complexity of industrial big data, effective data management, integration with heterogeneous sensing and control systems, and the demand for trustworthy, explainable, and reliable operation in high-stakes industrial environments. In this roadmap, we present a comprehensive perspective on the foundations, applications, and emerging directions of AI and ML in smart manufacturing. It is structured in three parts. The first highlights the foundations and trends that frame the evolution of AI in smart manufacturing. The second focuses on key topics where AI is already enabling advances, including industrial big data analytics, advanced sensing and perception, autonomous systems, additive and laser-based manufacturing, digital twins, robotics, supply chain and logistics optimization, and sustainable manufacturing. The third section explores non-traditional ML approaches that are opening new frontiers, such as physics-informed AI, generative AI, semantic AI, advanced digital twins, explainable AI, RAMS, data-centric metrology, LLMs, and foundation models for highly connected and complex manufacturing systems. By identifying both opportunities and remaining barriers across these areas, this roadmap outlines the advances needed in methods, integration strategies, and industrial adoption. We hope this roadmap will serve as a guide for researchers, engineers, and practitioners to accelerate innovation, align academic and industrial priorities, and ensure that AI-driven smart manufacturing delivers reliable, sustainable, and scalable impact for the future of manufacturing ecosystems.",
+      "ai_relevance_score": 10,
+      "ai_relevance_reason": "strong=2,weak=5,tech=4,always_ai_source",
+      "topic_tags": [
+        "Model Release",
+        "Application",
+        "Research"
+      ],
+      "entities": [
+        "Roadmap",
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Smart Manufacturing",
+        "Announce Type",
+        "Abstract"
+      ],
+      "event_type": "Release",
+      "sentiment": "pos",
+      "impact_score": 100.0,
+      "risk_tags": [],
+      "opportunity_tags": [
+        "Developer Tooling"
+      ],
+      "evidence": [
+        "2026 Roadmap on Artificial Intelligence and Machine Learning for Smart Manufacturing",
+        "arXiv:2605.00839v1 Announce Type: new Abstract: The evolution of artificial intelligence (AI) and machine learning (ML) is reshaping smart manufacturing by providing new capabilities for efficiency, adaptability, and autonomy across industrial value chains.",
+        "However, the deployment of AI and ML in industrial settings still faces critical challenges, including the complexity of industrial big data, effective data management, integration with heterogeneous sensing and control systems, and the demand for trustworthy, explainable, and reliable operation in high-stakes industrial environments."
+      ],
+      "extract_confidence": 0.98,
+      "hot_score": 88.5
+    },
+    {
+      "id": "6e7b24f62b993bda",
+      "title": "AI Agents for Sustainable SMEs: A Green ESG Assessment Framework",
+      "source": "arXiv cs.AI",
+      "source_type": "research",
+      "source_weight": 0.86,
+      "source_region": "global",
+      "url": "https://arxiv.org/abs/2605.00841",
+      "published_at": "2026-05-06T04:00:00+00:00",
+      "language": "en",
+      "raw_summary": "arXiv:2605.00841v1 Announce Type: new Abstract: This study presents a novel, AI-driven framework for assessing Environmental, Social, and Governance (ESG) performance in European small and medium-sized enterprises (SMEs). An initial phase established expert-validated ESG baseline scores from a subset of the Flash Eurobarometer FL549 survey data. In the second phase, a scalable AI agent system, built on the n8n automation platform, applied these baselines to perform automated ESG classification and generate contextual recommendations using large language models (LLMs). The results demonstrate the AI system's high consistency with human-derived outputs, thereby supporting more effective monitoring and intervention strategies aligned with the European Green Deal.",
+      "ai_relevance_score": 10,
+      "ai_relevance_reason": "strong=2,weak=4,tech=4,always_ai_source",
+      "topic_tags": [
+        "Model Release",
+        "Application",
+        "Policy",
+        "Research"
+      ],
+      "entities": [
+        "Agents",
+        "Sustainable SMEs",
+        "Green ESG Assessment",
+        "Framework",
+        "Announce Type",
+        "Abstract"
+      ],
+      "event_type": "Release",
+      "sentiment": "neu",
+      "impact_score": 100.0,
+      "risk_tags": [],
+      "opportunity_tags": [
+        "Enterprise Adoption",
+        "Developer Tooling"
+      ],
+      "evidence": [
+        "AI Agents for Sustainable SMEs: A Green ESG Assessment Framework",
+        "arXiv:2605.00841v1 Announce Type: new Abstract: This study presents a novel, AI-driven framework for assessing Environmental, Social, and Governance (ESG) performance in European small and medium-sized enterprises (SMEs).",
+        "An initial phase established expert-validated ESG baseline scores from a subset of the Flash Eurobarometer FL549 survey data."
+      ],
+      "extract_confidence": 0.98,
+      "hot_score": 88.5
+    },
+    {
+      "id": "c8cdbd0b5df00ae9",
+      "title": "Understanding Emergent Misalignment via Feature Superposition Geometry",
+      "source": "arXiv cs.AI",
+      "source_type": "research",
+      "source_weight": 0.86,
+      "source_region": "global",
+      "url": "https://arxiv.org/abs/2605.00842",
+      "published_at": "2026-05-06T04:00:00+00:00",
+      "language": "en",
+      "raw_summary": "arXiv:2605.00842v1 Announce Type: new Abstract: Emergent misalignment, where fine-tuning on narrow, non-harmful tasks induces harmful behaviors, poses a key challenge for AI safety in LLMs. Despite growing empirical evidence, its underlying mechanism remains unclear. To uncover the reason behind this phenomenon, we propose a geometric account based on the geometry of feature superposition. Because features are encoded in overlapping representations, fine-tuning that amplifies a target feature also unintentionally strengthens nearby harmful features in accordance with their similarity. We give a simple gradient-level derivation of this effect and empirically test it in multiple LLMs (Gemma-2 2B/9B/27B, LLaMA-3.1 8B, GPT-OSS 20B). Using sparse autoencoders (SAEs), we identify features tied to misalignment-inducing data and to harmful behaviors, and show that they are geometrically closer to each other than features derived from non-inducing data. This trend generalizes across domains (e.g., health, career, legal advice). Finally, we show that a geometry-aware approach, filtering training samples closest to toxic features, reduces misalignment by 34.5%, substantially outperforming random removal and achieving comparable or slightly lower misalignment than LLM-as-a-judge-based filtering. Our study links emergent misalignment to feature superposition, providing a basis for understanding and mitigating this phenomenon.",
+      "ai_relevance_score": 6,
+      "ai_relevance_reason": "strong=1,weak=2,tech=3,always_ai_source",
+      "topic_tags": [
+        "Model Release",
+        "Application",
+        "Research",
+        "Safety"
+      ],
+      "entities": [
+        "Understanding Emergent Misalignment",
+        "Feature Superposition Geometry",
+        "Announce Type",
+        "Abstract",
+        "Emergent",
+        "LLMs"
+      ],
+      "event_type": "Release",
+      "sentiment": "neg",
+      "impact_score": 100.0,
+      "risk_tags": [
+        "Safety"
+      ],
+      "opportunity_tags": [],
+      "evidence": [
+        "Understanding Emergent Misalignment via Feature Superposition Geometry",
+        "arXiv:2605.00842v1 Announce Type: new Abstract: Emergent misalignment, where fine-tuning on narrow, non-harmful tasks induces harmful behaviors, poses a key challenge for AI safety in LLMs.",
+        "Despite growing empirical evidence, its underlying mechanism remains unclear."
+      ],
+      "extract_confidence": 0.98,
+      "hot_score": 88.5
+    },
+    {
+      "id": "8b01a5c65d6aedc6",
+      "title": "ClinicBot: A Guideline-Grounded Clinical Chatbot with Prioritized Evidence RAG and Verifiable Citations",
+      "source": "arXiv cs.AI",
+      "source_type": "research",
+      "source_weight": 0.86,
+      "source_region": "global",
+      "url": "https://arxiv.org/abs/2605.00846",
+      "published_at": "2026-05-06T04:00:00+00:00",
+      "language": "en",
+      "raw_summary": "arXiv:2605.00846v1 Announce Type: new Abstract: Clinical diagnosis requires answers that are accurate, verifiable, and explicitly grounded in official guidelines. While large language models excel at natural language processing, their tendency to hallucinate undermines their utility in high-stakes medical contexts where precision is essential. Existing retrieval-augmented generation (RAG) systems treat all evidence equally, producing noisy context and generic answers misaligned with clinical practice. We present ClinicBot, an AI system that translates guideline recommendations into trustworthy clinical support through three key advances: (1) structured extraction of clinical guidelines into semantic units (recommendations, tables, definitions, narrative) with explicit provenance, (2) evidence prioritization that ranks content by clinical significance and guideline structure rather than textual similarity, and (3) a web-based interface that presents concise, actionable answers with verifiable evidence. We will demonstrate ClinicBot using diabetes questions from real patients and an additional diabetes risk assessment tool that is faithful to the American Diabetes Association (ADA) Standards of Care in Diabetes (2025). The demonstration will illustrate how semantic knowledge extraction and hierarchical evidence ranking can reliably operate in a multi-agent setting to process complex clinical guidelines at scale.",
+      "ai_relevance_score": 7,
+      "ai_relevance_reason": "strong=1,weak=3,tech=2,always_ai_source",
+      "topic_tags": [
+        "Model Release",
+        "Application",
+        "Research",
+        "Safety"
+      ],
+      "entities": [
+        "ClinicBot",
+        "Guideline",
+        "Grounded Clinical Chatbot",
+        "Prioritized Evidence RAG",
+        "Verifiable Citations",
+        "Announce Type"
+      ],
+      "event_type": "Release",
+      "sentiment": "neg",
+      "impact_score": 100.0,
+      "risk_tags": [],
+      "opportunity_tags": [
+        "Developer Tooling"
+      ],
+      "evidence": [
+        "ClinicBot: A Guideline-Grounded Clinical Chatbot with Prioritized Evidence RAG and Verifiable Citations",
+        "arXiv:2605.00846v1 Announce Type: new Abstract: Clinical diagnosis requires answers that are accurate, verifiable, and explicitly grounded in official guidelines.",
+        "While large language models excel at natural language processing, their tendency to hallucinate undermines their utility in high-stakes medical contexts where precision is essential."
+      ],
+      "extract_confidence": 0.98,
+      "hot_score": 88.5
+    },
+    {
+      "id": "54aa5986c7cf82f1",
+      "title": "Accelerating battery research with an AI interface between FINALES and Kadi4Mat",
+      "source": "arXiv cs.AI",
+      "source_type": "research",
+      "source_weight": 0.86,
+      "source_region": "global",
+      "url": "https://arxiv.org/abs/2605.00909",
+      "published_at": "2026-05-06T04:00:00+00:00",
+      "language": "en",
+      "raw_summary": "arXiv:2605.00909v1 Announce Type: new Abstract: The time-consuming formation process critically impacts the longevity of sodium-ion coin cells and End Of Life (EOL) performance. This study aims to optimize formation protocols for duration efficiency, targeting high-performance outcomes while minimizing the number of experiments to reduce resource consumption and accelerate discovery. Specifically, we consider two potentially competing objectives: minimizing formation time and maximizing EOL performance. Beyond this application focus, we also present a methodological contribution: a framework designed to enable interoperability between the FINALES and Kadi RDM ecosystems, which we employ to tackle our optimization problem. In this setup, the FINALES framework orchestrates experiment planning and execution on the POLiS MAP, while an active-learning agent implemented within Kadi4Mat guides experiment selection, using multi-objective batched Bayesian optimization to efficiently explore the parameter space. This interoperability enhancement enables coordinated, distributed collaboration across automated systems and human-operated workflows, bridging multiple research centers. Using this approach, we iteratively explore the trade-off between formation time and EOL performance and identify candidate solutions approximating the Pareto front. The resulting workflow demonstrates the capability of interoperable infrastructures to facilitate data-driven optimization in battery research, and establishes a transferable framework applicable to diverse materials science and engineering optimization tasks.",
+      "ai_relevance_score": 6,
+      "ai_relevance_reason": "strong=1,weak=2,tech=4,always_ai_source",
+      "topic_tags": [
+        "Model Release",
+        "Application",
+        "Policy",
+        "Research",
+        "Infrastructure"
+      ],
+      "entities": [
+        "Accelerating",
+        "FINALES",
+        "Kadi4Mat",
+        "Announce Type",
+        "Abstract",
+        "The"
+      ],
+      "event_type": "Release",
+      "sentiment": "neu",
+      "impact_score": 100.0,
+      "risk_tags": [],
+      "opportunity_tags": [
+        "Enterprise Adoption",
+        "Developer Tooling"
+      ],
+      "evidence": [
+        "Accelerating battery research with an AI interface between FINALES and Kadi4Mat",
+        "arXiv:2605.00909v1 Announce Type: new Abstract: The time-consuming formation process critically impacts the longevity of sodium-ion coin cells and End Of Life (EOL) performance.",
+        "This study aims to optimize formation protocols for duration efficiency, targeting high-performance outcomes while minimizing the number of experiments to reduce resource consumption and accelerate discovery."
+      ],
+      "extract_confidence": 0.98,
+      "hot_score": 88.5
+    }
+  ],
+  "trend_summary": {
+    "topics": {
+      "Application": 13,
+      "Model Release": 12,
+      "Infrastructure": 3,
+      "Research": 9,
+      "Capital": 2,
+      "Policy": 7,
+      "Safety": 5
+    },
+    "event_types": {
+      "General": 9,
+      "Research": 1,
+      "Policy": 2,
+      "Release": 8
+    },
+    "sentiments": {
+      "neu": 13,
+      "pos": 4,
+      "neg": 3
+    },
+    "risks": {
+      "Safety": 5
+    },
+    "source_types": {
+      "social": 3,
+      "aggregator": 4,
+      "media": 3,
+      "research": 8,
+      "official": 2
+    }
+  }
+}

@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Daily AI Insight Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5faf8;
+      --surface: rgba(255, 255, 255, 0.82);
+      --surface-strong: #ffffff;
+      --ink: #0d2026;
+      --muted: #4d6670;
+      --line: #d6e2e5;
+      --accent: #0f9d8a;
+      --accent-2: #e58f2a;
+      --danger: #e25555;
+      --shadow: 0 18px 45px rgba(16, 50, 64, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Noto Sans SC", "Space Grotesk", sans-serif;
+      background:
+        radial-gradient(circle at 15% -10%, #c4f0e9 0%, transparent 36%),
+        radial-gradient(circle at 86% -20%, #ffe3c1 0%, transparent 38%),
+        linear-gradient(140deg, #f8fcfb 0%, #eef6f4 100%);
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: linear-gradient(rgba(33, 94, 106, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(33, 94, 106, 0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
+      mask-image: radial-gradient(circle at 60% 5%, rgba(0, 0, 0, 0.8), transparent 80%);
+      z-index: 0;
+    }
+
+    .app {
+      position: relative;
+      z-index: 1;
+      max-width: 1180px;
+      margin: 28px auto 54px;
+      padding: 0 18px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .hero {
+      padding: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      right: -40px;
+      top: -95px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(15, 157, 138, 0.35), transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      max-width: 64ch;
+      line-height: 1.5;
+    }
+
+    .hero-meta {
+      display: grid;
+      gap: 8px;
+      min-width: 248px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      border: 1px solid #bfd4d8;
+      background: #f5fffc;
+      padding: 8px 12px;
+      font-size: 0.84rem;
+      color: #18414c;
+      width: fit-content;
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .kpi {
+      padding: 14px 16px 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--surface-strong);
+    }
+
+    .kpi-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-family: "Space Grotesk", sans-serif;
+    }
+
+    .kpi-value {
+      margin-top: 8px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(1.4rem, 2.6vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .kpi-sub {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .controls {
+      padding: 14px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .control-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .control-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-family: "Space Grotesk", sans-serif;
+    }
+
+    select {
+      min-width: 172px;
+      padding: 9px 11px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      font-size: 0.92rem;
+    }
+
+    .chips {
+      display: inline-flex;
+      gap: 8px;
+      padding: 5px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .chip {
+      border: 0;
+      background: transparent;
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      color: #35545d;
+      cursor: pointer;
+      transition: background .22s ease, color .22s ease, transform .22s ease;
+    }
+
+    .chip:hover {
+      transform: translateY(-1px);
+      background: #edf5f5;
+    }
+
+    .chip.active {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(15, 157, 138, 0.25);
+    }
+
+    .action-btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-size: 0.84rem;
+      font-family: "Space Grotesk", sans-serif;
+      color: #fff;
+      background: linear-gradient(120deg, #138f80, #0f6a8f);
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease;
+      box-shadow: 0 10px 20px rgba(15, 106, 143, 0.25);
+    }
+
+    .action-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.25fr 0.95fr;
+      gap: 14px;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 1rem;
+      font-family: "Space Grotesk", sans-serif;
+      letter-spacing: -0.01em;
+    }
+
+    .chart-panel {
+      padding: 16px;
+      min-height: 250px;
+    }
+
+    .topic-bars {
+      margin-top: 14px;
+      display: grid;
+      gap: 9px;
+    }
+
+    .topic-row {
+      display: grid;
+      gap: 6px;
+    }
+
+    .topic-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.88rem;
+      color: #29434c;
+    }
+
+    .topic-track {
+      height: 10px;
+      border-radius: 999px;
+      background: #e7eff0;
+      overflow: hidden;
+    }
+
+    .topic-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #13a08d, #32c4ad);
+      transform-origin: left center;
+      animation: growBar .72s ease both;
+    }
+
+    @keyframes growBar {
+      from { transform: scaleX(0.12); opacity: 0.2; }
+      to { transform: scaleX(1); opacity: 1; }
+    }
+
+    .sentiment-wrap {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .donut {
+      width: 150px;
+      height: 150px;
+      border-radius: 999px;
+      position: relative;
+      box-shadow: inset 0 0 0 1px #d9e5e7;
+    }
+
+    .donut::before {
+      content: "";
+      position: absolute;
+      inset: 26%;
+      border-radius: 999px;
+      background: #fff;
+      box-shadow: inset 0 0 0 1px #dfe8ea;
+    }
+
+    .donut-center {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #27434d;
+      z-index: 1;
+      text-align: center;
+      line-height: 1.05;
+    }
+
+    .legend {
+      display: grid;
+      gap: 8px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      font-size: 0.86rem;
+      color: #2d4b54;
+    }
+
+    .legend-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+    }
+
+    .timeline-wrap {
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      padding: 12px;
+    }
+
+    .timeline-svg {
+      width: 100%;
+      height: 172px;
+      display: block;
+    }
+
+    .timeline-axis {
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: #5b7076;
+    }
+
+    .events {
+      padding: 16px;
+    }
+
+    .events-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .events-list {
+      display: grid;
+      gap: 10px;
+      max-height: 540px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .event-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+      transition: transform .24s ease, box-shadow .24s ease;
+    }
+
+    .event-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(20, 52, 63, 0.12);
+    }
+
+    .event-title {
+      font-size: 0.96rem;
+      font-weight: 600;
+      line-height: 1.35;
+      color: #14313a;
+      margin: 0;
+    }
+
+    .event-meta {
+      color: #587179;
+      font-size: 0.78rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .pill {
+      border-radius: 999px;
+      background: #edf6f6;
+      color: #22505d;
+      font-size: 0.74rem;
+      padding: 4px 8px;
+      border: 1px solid #d8e8ea;
+    }
+
+    .score {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.82rem;
+      color: #16424d;
+    }
+
+    .score strong {
+      font-size: 0.97rem;
+    }
+
+    .empty {
+      border: 1px dashed var(--line);
+      border-radius: 12px;
+      color: #587179;
+      padding: 16px;
+      background: #fbfefe;
+      font-size: 0.9rem;
+    }
+
+    .footer-note {
+      color: #4f656d;
+      font-size: 0.82rem;
+      padding: 10px 4px 0;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 980px) {
+      .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .app { margin-top: 14px; padding: 0 12px; }
+      .hero { padding: 18px; }
+      .controls { padding: 12px; }
+      .kpi-value { font-size: 1.45rem; }
+      .sentiment-wrap { grid-template-columns: 1fr; justify-items: center; }
+      .donut { width: 132px; height: 132px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="panel hero">
+      <div>
+        <h1>Daily AI Insight Dashboard</h1>
+        <p>Interactive daily intelligence board for AI news. Filter by source and language, track momentum, and inspect high-impact events with evidence tags.</p>
+      </div>
+      <div class="hero-meta">
+        <div class="tag">UTC Snapshot · <span id="snapshotTime">--</span></div>
+        <div class="tag">Records in View · <span id="activeRecordCount">0</span></div>
+      </div>
+    </section>
+
+    <section class="kpis" id="kpiBoard">
+      <article class="panel kpi">
+        <div class="kpi-label">Total News</div>
+        <div class="kpi-value" data-kpi="total">0</div>
+        <div class="kpi-sub">Filtered records</div>
+      </article>
+      <article class="panel kpi">
+        <div class="kpi-label">Avg Impact</div>
+        <div class="kpi-value" data-kpi="impact">0</div>
+        <div class="kpi-sub">0 - 100 score</div>
+      </article>
+      <article class="panel kpi">
+        <div class="kpi-label">Avg Confidence</div>
+        <div class="kpi-value" data-kpi="confidence">0%</div>
+        <div class="kpi-sub">Extraction quality</div>
+      </article>
+      <article class="panel kpi">
+        <div class="kpi-label">Risk Tagged</div>
+        <div class="kpi-value" data-kpi="risk">0</div>
+        <div class="kpi-sub">Potential risk items</div>
+      </article>
+    </section>
+
+    <section class="panel controls">
+      <div class="control-group">
+        <span class="control-label">Source</span>
+        <select id="sourceFilter"></select>
+      </div>
+      <div class="control-group">
+        <span class="control-label">Language</span>
+        <div class="chips">
+          <button class="chip" data-lang="all">All</button>
+          <button class="chip active" data-lang="en">EN</button>
+          <button class="chip" data-lang="zh">ZH</button>
+        </div>
+      </div>
+      <div class="control-group">
+        <span class="control-label">Sort</span>
+        <select id="sortMode">
+          <option value="hot">Hot Score</option>
+          <option value="impact">Impact Score</option>
+          <option value="newest">Newest First</option>
+          <option value="confidence">Confidence</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <button id="exportCsvBtn" class="action-btn" type="button">Export Filtered CSV</button>
+      </div>
+    </section>
+
+    <section class="layout">
+      <section class="panel chart-panel">
+        <h3 class="panel-title">Topic Momentum</h3>
+        <div id="topicBars" class="topic-bars"></div>
+      </section>
+      <section class="panel chart-panel">
+        <h3 class="panel-title">Sentiment Mix</h3>
+        <div class="sentiment-wrap">
+          <div class="donut" id="sentimentDonut">
+            <div class="donut-center"><span id="donutTotal">0</span><br>items</div>
+          </div>
+          <div id="sentimentLegend" class="legend"></div>
+        </div>
+      </section>
+    </section>
+
+    <section class="panel chart-panel">
+      <h3 class="panel-title">Publish Timeline (UTC)</h3>
+      <div class="timeline-wrap">
+        <svg class="timeline-svg" id="timelineSvg" viewBox="0 0 740 170" preserveAspectRatio="none"></svg>
+        <div id="timelineAxis" class="timeline-axis"></div>
+      </div>
+    </section>
+
+    <section class="panel events">
+      <div class="events-head">
+        <h3 class="panel-title">Key Events</h3>
+        <div class="tag">Sorted by <span id="sortLabel">Hot Score</span></div>
+      </div>
+      <div id="eventsList" class="events-list"></div>
+    </section>
+
+    <p class="footer-note">
+      This dashboard is generated automatically from the daily pipeline output.
+      Scores are heuristic and should be read with evidence context.
+    </p>
+  </main>
+
+  <script>
+    const RAW_RECORDS = [{"id": "130faa04cf8af5c8", "title": "Agentic AI Community 2026", "source": "Hacker News AI", "source_type": "social", "source_weight": 0.74, "source_region": "global", "url": "https://simplai.ai/simplai-university", "published_at": "2026-05-06T09:53:42+00:00", "language": "en", "raw_summary": "Article URL: https://simplai.ai/simplai-university Comments URL: https://news.ycombinator.com/item?id=48034348 Points: 2 # Comments: 0", "ai_relevance_score": 4, "ai_relevance_reason": "strong=1,weak=2,tech=1", "topic_tags": ["Application"], "entities": ["Agentic", "Community", "Article URL", "Comments URL", "Points", "Comments"], "event_type": "General", "sentiment": "neu", "impact_score": 86.8, "risk_tags": [], "opportunity_tags": ["Developer Tooling"], "evidence": ["Agentic AI Community 2026", "Article URL: https://simplai.ai/simplai-university Comments URL: https://news.ycombinator.com/item?id=48034348 Points: 2 # Comments: 0"], "extract_confidence": 0.98}, {"id": "d082e30a3d7c9268", "title": "Anthropic搞了个全是AI的闲鱼群 大模型在里面互割起了韭菜 - 驱动之家", "source": "Google News ZH", "source_type": "aggregator", "source_weight": 0.78, "source_region": "cn", "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE9mWnFWTVBucm1kNHc5a3dXVUZuRnZ5X0R1VFRCR3N3YUJVU0xfYjdoV3VkYjFrdGFfXy1jYThvZ0lRVkJaaVJmSGduY1pRTFNzTl96bGFZeUo?oc=5", "published_at": "2026-05-06T08:34:00+00:00", "language": "zh", "raw_summary": "Anthropic搞了个全是AI的闲鱼群 大模型在里面互割起了韭菜 驱动之家", "ai_relevance_score": 7, "ai_relevance_reason": "strong=2,weak=3,tech=2", "topic_tags": ["Model Release"], "entities": ["Anthropic"], "event_type": "General", "sentiment": "neu", "impact_score": 87.6, "risk_tags": [], "opportunity_tags": [], "evidence": ["Anthropic搞了个全是AI的闲鱼群 大模型在里面互割起了韭菜 - 驱动之家", "Anthropic搞了个全是AI的闲鱼群 大模型在里面互割起了韭菜 驱动之家"], "extract_confidence": 0.85}, {"id": "6f5839fb92b71d12", "title": "算力账单压顶:大模型集体“下海”赚钱,谁能活过2026? - 证券时报", "source": "Google News ZH", "source_type": "aggregator", "source_weight": 0.78, "source_region": "cn", "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFBUY3VvMlRQR2VqTXM3SkNNaU0zLUdGWVpzUXV0a3Z3RVZveURGbUROa0RodExFXy12QkVkTnF4MVIwSmhZQ0VTeXYzV3JfbDdHQmtxbnRhOWkxSVFv?oc=5", "published_at": "2026-05-06T07:33:00+00:00", "language": "zh", "raw_summary": "算力账单压顶:大模型集体“下海”赚钱,谁能活过2026? 证券时报", "ai_relevance_score": 5, "ai_relevance_reason": "strong=2,weak=1,tech=2", "topic_tags": ["Model Release", "Infrastructure"], "entities": [], "event_type": "General", "sentiment": "neu", "impact_score": 91.6, "risk_tags": [], "opportunity_tags": ["Infrastructure Demand"], "evidence": ["算力账单压顶:大模型集体“下海”赚钱,谁能活过2026? - 证券时报", "算力账单压顶:大模型集体“下海”赚钱,谁能活过2026?"], "extract_confidence": 0.7}, {"id": "0a2df47c22c2b4ac", "title": "GenGEO: A binary trust registry for AI agent transactions", "source": "Hacker News AI", "source_type": "social", "source_weight": 0.74, "source_region": "global", "url": "https://github.com/warwickwood-cell/gengeo-agent-registry", "published_at": "2026-05-06T07:21:22+00:00", "language": "en", "raw_summary": "Article URL: https://github.com/warwickwood-cell/gengeo-agent-registry Comments URL: https://news.ycombinator.com/item?id=48033281 Points: 1 # Comments: 0", "ai_relevance_score": 4, "ai_relevance_reason": "strong=1,weak=2,tech=1", "topic_tags": ["Application"], "entities": ["GenGEO", "Article URL", "Comments URL", "Points", "Comments"], "event_type": "General", "sentiment": "neu", "impact_score": 86.8, "risk_tags": [], "opportunity_tags": ["Developer Tooling"], "evidence": ["GenGEO: A binary trust registry for AI agent transactions", "Article URL: https://github.com/warwickwood-cell/gengeo-agent-registry Comments URL: https://news.ycombinator.com/item?id=48033281 Points: 1 # Comments: 0"], "extract_confidence": 0.98}, {"id": "d935bfb10f9541a0", "title": "织就全域智慧教育星图——解码北京“人工智能+教育”的创新之力 - thepaper.cn", "source": "Google News ZH", "source_type": "aggregator", "source_weight": 0.78, "source_region": "cn", "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE8zdUNMeldHeEswdnN4cEFCRDhvN05acTBhR2tfS3hxZ0N3Z2JlbmR3RzQzVUc3VDRlOVRVdjBFVlpCZW83eVNMbDVhRXpSTmtrRENodXpFUnZpdUhmSmc?oc=5", "published_at": "2026-05-06T07:05:00+00:00", "language": "zh", "raw_summary": "织就全域智慧教育星图——解码北京“人工智能+教育”的创新之力 thepaper.cn", "ai_relevance_score": 3, "ai_relevance_reason": "strong=1,weak=1", "topic_tags": ["Research"], "entities": [], "event_type": "Research", "sentiment": "neu", "impact_score": 87.6, "risk_tags": [], "opportunity_tags": ["Industry Vertical"], "evidence": ["织就全域智慧教育星图——解码北京“人工智能+教育”的创新之力 - thepaper.cn", "织就全域智慧教育星图——解码北京“人工智能+教育”的创新之力 thepaper.cn"], "extract_confidence": 0.7}, {"id": "4f6c894b866130ba", "title": "Peter Sarlin’s QuTwo reaches $380M valuation in angel round", "source": "TechCrunch AI", "source_type": "media", "source_weight": 0.84, "source_region": "us", "url": "https://techcrunch.com/2026/05/05/peter-sarlins-qutwo-reaches-380m-valuation-in-angel-round/", "published_at": "2026-05-06T06:47:12+00:00", "language": "en", "raw_summary": "QyTw0, the Finnish AI lab founded by former AMD Silo AI CEO Peter Sarlin, is now valued at €325 million (approximately $380 million) after raising a €25 million angel round ($29 million). It's a sign of enduring tailwinds for AI, quantum computing, and sovereign tech, especially for Europe-made companies.", "ai_relevance_score": 3, "ai_relevance_reason": "weak=1,always_ai_source", "topic_tags": ["Application", "Capital"], "entities": ["Peter Sarlin", "QuTwo", "QyTw0", "Finnish", "AMD Silo", "CEO Peter Sarlin"], "event_type": "General", "sentiment": "neu", "impact_score": 92.8, "risk_tags": [], "opportunity_tags": [], "evidence": ["Peter Sarlin’s QuTwo reaches $380M valuation in angel round", "QyTw0, the Finnish AI lab founded by former AMD Silo AI CEO Peter Sarlin, is now valued at €325 million (approximately $380 million) after raising a €25 million angel round ($29 million).", "It's a sign of enduring tailwinds for AI, quantum computing, and sovereign tech, especially for Europe-made companies."], "extract_confidence": 0.98}, {"id": "310e97f26868b21d", "title": "SensorHub – The event-driven version of Clawhub (giving AI agents \"ears\")", "source": "Hacker News AI", "source_type": "social", "source_weight": 0.74, "source_region": "global", "url": "https://world2agent.ai/hub", "published_at": "2026-05-06T06:46:21+00:00", "language": "en", "raw_summary": "Article URL: https://world2agent.ai/hub Comments URL: https://news.ycombinator.com/item?id=48033063 Points: 5 # Comments: 0", "ai_relevance_score": 4, "ai_relevance_reason": "strong=1,weak=2,tech=1", "topic_tags": ["Application", "Policy"], "entities": ["SensorHub", "The", "Clawhub", "Article URL", "Comments URL", "Points"], "event_type": "Policy", "sentiment": "neu", "impact_score": 97.8, "risk_tags": [], "opportunity_tags": ["Developer Tooling"], "evidence": ["SensorHub – The event-driven version of Clawhub (giving AI agents \"ears\")", "Article URL: https://world2agent.ai/hub Comments URL: https://news.ycombinator.com/item?id=48033063 Points: 5 # Comments: 0"], "extract_confidence": 0.98}, {"id": "960c576e69acf18f", "title": "Marc Lore says that AI will soon enable anyone open a restaurant", "source": "TechCrunch AI", "source_type": "media", "source_weight": 0.84, "source_region": "us", "url": "https://techcrunch.com/2026/05/05/marc-lore-says-that-ai-will-soon-enable-anyone-open-a-restaurant/", "published_at": "2026-05-06T06:34:32+00:00", "language": "en", "raw_summary": "Wonder wants to turn its robotic kitchens into AI-powered “restaurant factories,” letting anyone spin up a virtual food brand with a prompt.", "ai_relevance_score": 3, "ai_relevance_reason": "weak=1,always_ai_source", "topic_tags": ["Application"], "entities": ["Marc Lore", "Wonder"], "event_type": "General", "sentiment": "neu", "impact_score": 88.8, "risk_tags": [], "opportunity_tags": [], "evidence": ["Marc Lore says that AI will soon enable anyone open a restaurant", "Wonder wants to turn its robotic kitchens into AI-powered “restaurant factories,” letting anyone spin up a virtual food brand with a prompt."], "extract_confidence": 0.98}, {"id": "d93f832545905d5b", "title": "2026 Roadmap on Artificial Intelligence and Machine Learning for Smart Manufacturing", "source": "arXiv cs.AI", "source_type": "research", "source_weight": 0.86, "source_region": "global", "url": "https://arxiv.org/abs/2605.00839", "published_at": "2026-05-06T04:00:00+00:00", "language": "en", "raw_summary": "arXiv:2605.00839v1 Announce Type: new Abstract: The evolution of artificial intelligence (AI) and machine learning (ML) is reshaping smart manufacturing by providing new capabilities for efficiency, adaptability, and autonomy across industrial value chains. However, the deployment of AI and ML in industrial settings still faces critical challenges, including the complexity of industrial big data, effective data management, integration with heterogeneous sensing and control systems, and the demand for trustworthy, explainable, and reliable operation in high-stakes industrial environments. In this roadmap, we present a comprehensive perspective on the foundations, applications, and emerging directions of AI and ML in smart manufacturing. It is structured in three parts. The first highlights the foundations and trends that frame the evolution of AI in smart manufacturing. The second focuses on key topics where AI is already enabling advances, including industrial big data analytics, advanced sensing and perception, autonomous systems, additive and laser-based manufacturing, digital twins, robotics, supply chain and logistics optimization, and sustainable manufacturing. The third section explores non-traditional ML approaches that are opening new frontiers, such as physics-informed AI, generative AI, semantic AI, advanced digital twins, explainable AI, RAMS, data-centric metrology, LLMs, and foundation models for highly connected and complex manufacturing systems. By identifying both opportunities and remaining barriers across these areas, this roadmap outlines the advances needed in methods, integration strategies, and industrial adoption. We hope this roadmap will serve as a guide for researchers, engineers, and practitioners to accelerate innovation, align academic and industrial priorities, and ensure that AI-driven smart manufacturing delivers reliable, sustainable, and scalable impact for the future of manufacturing ecosystems.", "ai_relevance_score": 10, "ai_relevance_reason": "strong=2,weak=5,tech=4,always_ai_source", "topic_tags": ["Model Release", "Application", "Research"], "entities": ["Roadmap", "Artificial Intelligence", "Machine Learning", "Smart Manufacturing", "Announce Type", "Abstract"], "event_type": "Release", "sentiment": "pos", "impact_score": 100.0, "risk_tags": [], "opportunity_tags": ["Developer Tooling"], "evidence": ["2026 Roadmap on Artificial Intelligence and Machine Learning for Smart Manufacturing", "arXiv:2605.00839v1 Announce Type: new Abstract: The evolution of artificial intelligence (AI) and machine learning (ML) is reshaping smart manufacturing by providing new capabilities for efficiency, adaptability, and autonomy across industrial value chains.", "However, the deployment of AI and ML in industrial settings still faces critical challenges, including the complexity of industrial big data, effective data management, integration with heterogeneous sensing and control systems, and the demand for trustworthy, explainable, and reliable operation in high-stakes industrial environments."], "extract_confidence": 0.98}, {"id": "6e7b24f62b993bda", "title": "AI Agents for Sustainable SMEs: A Green ESG Assessment Framework", "source": "arXiv cs.AI", "source_type": "research", "source_weight": 0.86, "source_region": "global", "url": "https://arxiv.org/abs/2605.00841", "published_at": "2026-05-06T04:00:00+00:00", "language": "en", "raw_summary": "arXiv:2605.00841v1 Announce Type: new Abstract: This study presents a novel, AI-driven framework for assessing Environmental, Social, and Governance (ESG) performance in European small and medium-sized enterprises (SMEs). An initial phase established expert-validated ESG baseline scores from a subset of the Flash Eurobarometer FL549 survey data. In the second phase, a scalable AI agent system, built on the n8n automation platform, applied these baselines to perform automated ESG classification and generate contextual recommendations using large language models (LLMs). The results demonstrate the AI system's high consistency with human-derived outputs, thereby supporting more effective monitoring and intervention strategies aligned with the European Green Deal.", "ai_relevance_score": 10, "ai_relevance_reason": "strong=2,weak=4,tech=4,always_ai_source", "topic_tags": ["Model Release", "Application", "Policy", "Research"], "entities": ["Agents", "Sustainable SMEs", "Green ESG Assessment", "Framework", "Announce Type", "Abstract"], "event_type": "Release", "sentiment": "neu", "impact_score": 100.0, "risk_tags": [], "opportunity_tags": ["Enterprise Adoption", "Developer Tooling"], "evidence": ["AI Agents for Sustainable SMEs: A Green ESG Assessment Framework", "arXiv:2605.00841v1 Announce Type: new Abstract: This study presents a novel, AI-driven framework for assessing Environmental, Social, and Governance (ESG) performance in European small and medium-sized enterprises (SMEs).", "An initial phase established expert-validated ESG baseline scores from a subset of the Flash Eurobarometer FL549 survey data."], "extract_confidence": 0.98}, {"id": "c8cdbd0b5df00ae9", "title": "Understanding Emergent Misalignment via Feature Superposition Geometry", "source": "arXiv cs.AI", "source_type": "research", "source_weight": 0.86, "source_region": "global", "url": "https://arxiv.org/abs/2605.00842", "published_at": "2026-05-06T04:00:00+00:00", "language": "en", "raw_summary": "arXiv:2605.00842v1 Announce Type: new Abstract: Emergent misalignment, where fine-tuning on narrow, non-harmful tasks induces harmful behaviors, poses a key challenge for AI safety in LLMs. Despite growing empirical evidence, its underlying mechanism remains unclear. To uncover the reason behind this phenomenon, we propose a geometric account based on the geometry of feature superposition. Because features are encoded in overlapping representations, fine-tuning that amplifies a target feature also unintentionally strengthens nearby harmful features in accordance with their similarity. We give a simple gradient-level derivation of this effect and empirically test it in multiple LLMs (Gemma-2 2B/9B/27B, LLaMA-3.1 8B, GPT-OSS 20B). Using sparse autoencoders (SAEs), we identify features tied to misalignment-inducing data and to harmful behaviors, and show that they are geometrically closer to each other than features derived from non-inducing data. This trend generalizes across domains (e.g., health, career, legal advice). Finally, we show that a geometry-aware approach, filtering training samples closest to toxic features, reduces misalignment by 34.5%, substantially outperforming random removal and achieving comparable or slightly lower misalignment than LLM-as-a-judge-based filtering. Our study links emergent misalignment to feature superposition, providing a basis for understanding and mitigating this phenomenon.", "ai_relevance_score": 6, "ai_relevance_reason": "strong=1,weak=2,tech=3,always_ai_source", "topic_tags": ["Model Release", "Application", "Research", "Safety"], "entities": ["Understanding Emergent Misalignment", "Feature Superposition Geometry", "Announce Type", "Abstract", "Emergent", "LLMs"], "event_type": "Release", "sentiment": "neg", "impact_score": 100.0, "risk_tags": ["Safety"], "opportunity_tags": [], "evidence": ["Understanding Emergent Misalignment via Feature Superposition Geometry", "arXiv:2605.00842v1 Announce Type: new Abstract: Emergent misalignment, where fine-tuning on narrow, non-harmful tasks induces harmful behaviors, poses a key challenge for AI safety in LLMs.", "Despite growing empirical evidence, its underlying mechanism remains unclear."], "extract_confidence": 0.98}, {"id": "8b01a5c65d6aedc6", "title": "ClinicBot: A Guideline-Grounded Clinical Chatbot with Prioritized Evidence RAG and Verifiable Citations", "source": "arXiv cs.AI", "source_type": "research", "source_weight": 0.86, "source_region": "global", "url": "https://arxiv.org/abs/2605.00846", "published_at": "2026-05-06T04:00:00+00:00", "language": "en", "raw_summary": "arXiv:2605.00846v1 Announce Type: new Abstract: Clinical diagnosis requires answers that are accurate, verifiable, and explicitly grounded in official guidelines. While large language models excel at natural language processing, their tendency to hallucinate undermines their utility in high-stakes medical contexts where precision is essential. Existing retrieval-augmented generation (RAG) systems treat all evidence equally, producing noisy context and generic answers misaligned with clinical practice. We present ClinicBot, an AI system that translates guideline recommendations into trustworthy clinical support through three key advances: (1) structured extraction of clinical guidelines into semantic units (recommendations, tables, definitions, narrative) with explicit provenance, (2) evidence prioritization that ranks content by clinical significance and guideline structure rather than textual similarity, and (3) a web-based interface that presents concise, actionable answers with verifiable evidence. We will demonstrate ClinicBot using diabetes questions from real patients and an additional diabetes risk assessment tool that is faithful to the American Diabetes Association (ADA) Standards of Care in Diabetes (2025). The demonstration will illustrate how semantic knowledge extraction and hierarchical evidence ranking can reliably operate in a multi-agent setting to process complex clinical guidelines at scale.", "ai_relevance_score": 7, "ai_relevance_reason": "strong=1,weak=3,tech=2,always_ai_source", "topic_tags": ["Model Release", "Application", "Research", "Safety"], "entities": ["ClinicBot", "Guideline", "Grounded Clinical Chatbot", "Prioritized Evidence RAG", "Verifiable Citations", "Announce Type"], "event_type": "Release", "sentiment": "neg", "impact_score": 100.0, "risk_tags": [], "opportunity_tags": ["Developer Tooling"], "evidence": ["ClinicBot: A Guideline-Grounded Clinical Chatbot with Prioritized Evidence RAG and Verifiable Citations", "arXiv:2605.00846v1 Announce Type: new Abstract: Clinical diagnosis requires answers that are accurate, verifiable, and explicitly grounded in official guidelines.", "While large language models excel at natural language processing, their tendency to hallucinate undermines their utility in high-stakes medical contexts where precision is essential."], "extract_confidence": 0.98}, {"id": "54aa5986c7cf82f1", "title": "Accelerating battery research with an AI interface between FINALES and Kadi4Mat", "source": "arXiv cs.AI", "source_type": "research", "source_weight": 0.86, "source_region": "global", "url": "https://arxiv.org/abs/2605.00909", "published_at": "2026-05-06T04:00:00+00:00", "language": "en", "raw_summary": "arXiv:2605.00909v1 Announce Type: new Abstract: The time-consuming formation process critically impacts the longevity of sodium-ion coin cells and End Of Life (EOL) performance. This study aims to optimize formation protocols for duration efficiency, targeting high-performance outcomes while minimizing the number of experiments to reduce resource consumption and accelerate discovery. Specifically, we consider two potentially competing objectives: minimizing formation time and maximizing EOL performance. Beyond this application focus, we also present a methodological contribution: a framework designed to enable interoperability between the FINALES and Kadi RDM ecosystems, which we employ to tackle our optimization problem. In this setup, the FINALES framework orchestrates experiment planning and execution on the POLiS MAP, while an active-learning agent implemented within Kadi4Mat guides experiment selection, using multi-objective batched Bayesian optimization to efficiently explore the parameter space. This interoperability enhancement enables coordinated, distributed collaboration across automated systems and human-operated workflows, bridging multiple research centers. Using this approach, we iteratively explore the trade-off between formation time and EOL performance and identify candidate solutions approximating the Pareto front. The resulting workflow demonstrates the capability of interoperable infrastructures to facilitate data-driven optimization in battery research, and establishes a transferable framework applicable to diverse materials science and engineering optimization tasks.", "ai_relevance_score": 6, "ai_relevance_reason": "strong=1,weak=2,tech=4,always_ai_source", "topic_tags": ["Model Release", "Application", "Policy", "Research", "Infrastructure"], "entities": ["Accelerating", "FINALES", "Kadi4Mat", "Announce Type", "Abstract", "The"], "event_type": "Release", "sentiment": "neu", "impact_score": 100.0, "risk_tags": [], "opportunity_tags": ["Enterprise Adoption", "Developer Tooling"], "evidence": ["Accelerating battery research with an AI interface between FINALES and Kadi4Mat", "arXiv:2605.00909v1 Announce Type: new Abstract: The time-consuming formation process critically impacts the longevity of sodium-ion coin cells and End Of Life (EOL) performance.", "This study aims to optimize formation protocols for duration efficiency, targeting high-performance outcomes while minimizing the number of experiments to reduce resource consumption and accelerate discovery."], "extract_confidence": 0.98}, {"id": "c721da127245071a", "title": "Effect-Transparent Governance for AI Workflow Architectures: Semantic Preservation, Expressive Minimality, and Decidability Boundaries", "source": "arXiv cs.AI", "source_type": "research", "source_weight": 0.86, "source_region": "global", "url": "https://arxiv.org/abs/2605.01030", "published_at": "2026-05-06T04:00:00+00:00", "language": "en", "raw_summary": "arXiv:2605.01030v2 Announce Type: new Abstract: We present a machine-checked formalization of structurally governed AI workflow architectures and prove that effect-level governance can be imposed without reducing internal computational expressivity. Using Interaction Trees in Rocq 8.19, we define a governance operator G that mediates all effectful directives, including memory access, external calls, and oracle (LLM) queries. Our development compiles with 0 admitted lemmas and consists of 36 modules, ~12,000 lines of Rocq, and 454 theorems. We establishseven properties: (P1) governed Turing completeness, (P2) governed oracle expressivity, (P3) a decidability boundary in which governance predicates are total and closed under Boolean composition while semantic program properties remain non-trivial and undecidable by governance, (P4) goal preservation for permitted executions, (P5) expressive minimality of primitive capabilities (compute, memory, reasoning, external call, observability), (P6) subsumption asymmetry showing structural governance strictly subsumes content-level filtering, and (P7) semantic transparency: on all executions where governance permits, the governed interpretation is observationally equivalent (modulo governance-only events) to the ungoverned interpretation. Together, these results show that governance and computational expressivity are orthogonal dimensions: governance constrains the effect boundary of programs while remaining semantically transparent to internal computation.", "ai_relevance_score": 6, "ai_relevance_reason": "strong=1,weak=2,tech=2,always_ai_source", "topic_tags": ["Model Release", "Application", "Policy", "Research", "Infrastructure"], "entities": ["Effect", "Transparent Governance", "Workflow Architectures", "Semantic Preservation", "Expressive Minimality", "Decidability Boundaries"], "event_type": "Release", "sentiment": "neg", "impact_score": 100.0, "risk_tags": [], "opportunity_tags": ["Enterprise Adoption"], "evidence": ["Effect-Transparent Governance for AI Workflow Architectures: Semantic Preservation, Expressive Minimality, and Decidability Boundaries", "arXiv:2605.01030v2 Announce Type: new Abstract: We present a machine-checked formalization of structurally governed AI workflow architectures and prove that effect-level governance can be imposed without reducing internal computational expressivity.", "Using Interaction Trees in Rocq 8.19, we define a governance operator G that mediates all effectful directives, including memory access, external calls, and oracle (LLM) queries."], "extract_confidence": 0.98}, {"id": "9a2159e13aaed0d2", "title": "Algebraic Semantics of Governed Execution: Monoidal Categories, Effect Algebras, and Coterminous Boundaries", "source": "arXiv cs.AI", "source_type": "research", "source_weight": 0.86, "source_region": "global", "url": "https://arxiv.org/abs/2605.01032", "published_at": "2026-05-06T04:00:00+00:00", "language": "en", "raw_summary": "arXiv:2605.01032v2 Announce Type: new Abstract: We present an algebraic semantics for governed execution in which governance is axiomatized, compositional, and coterminous with expressibility. The framework, mechanized in 32 Rocq modules (~12,000 lines, 454 theorems, 0 admitted), is built on interaction trees and parameterized coinduction. A three-axiom GovernanceAlgebra record (safety, transparency, properness) induces a symmetric monoidal category with verified pentagon, triangle, and hexagon coherence, where every tensor composition preserves governance. An algebraic effect system constrains the handler algebra so that only governance-preserving handlers can be constructed in the safe fragment; programs in the empty capability set provably emit only observability directives. Capability-indexed composition bundles programs with machine-checked capability bounds, and a dual guarantee theorem establishes that within_caps and gov_safe hold simultaneously under all composition operators. The capstone result is the coterminous boundary: within our formal model, every program expressible via the four primitive morphism constructors is governed under interpretation, and every governed program is the image of such a program. Turing completeness is preserved inside governance; unmediated I/O is excluded from the governed fragment. Governance denial is modeled as safe coinductive divergence. The governance algebra is parametric: any system instantiating the three axioms inherits all derived properties, including convergence, compositional closure, and goal preservation. Extracted OCaml runs as a NIF in the BEAM runtime, with property-based testing (70,000+ random inputs, zero disagreements) confirming behavioral equivalence between the specification and the runtime interpreter.", "ai_relevance_score": 4, "ai_relevance_reason": "weak=2,tech=2,always_ai_source", "topic_tags": ["Model Release", "Policy", "Research", "Safety"], "entities": ["Algebraic Semantics", "Governed Execution", "Monoidal Categories", "Effect Algebras", "Coterminous Boundaries", "Announce Type"], "event_type": "Release", "sentiment": "pos", "impact_score": 100.0, "risk_tags": ["Safety"], "opportunity_tags": ["Developer Tooling"], "evidence": ["Algebraic Semantics of Governed Execution: Monoidal Categories, Effect Algebras, and Coterminous Boundaries", "arXiv:2605.01032v2 Announce Type: new Abstract: We present an algebraic semantics for governed execution in which governance is axiomatized, compositional, and coterminous with expressibility.", "The framework, mechanized in 32 Rocq modules (~12,000 lines, 454 theorems, 0 admitted), is built on interaction trees and parameterized coinduction."], "extract_confidence": 0.98}, {"id": "a5ead75b92876a78", "title": "A Knowledge-Driven LLM-Based Decision-Support System for Explainable Defect Analysis and Mitigation Guidance in Laser Powder Bed Fusion", "source": "arXiv cs.AI", "source_type": "research", "source_weight": 0.86, "source_region": "global", "url": "https://arxiv.org/abs/2605.01100", "published_at": "2026-05-06T04:00:00+00:00", "language": "en", "raw_summary": "arXiv:2605.01100v1 Announce Type: new Abstract: This work presents a knowledge-driven decision-support system that integrates structured defect knowledge with LLM-based reasoning to provide explainable defect diagnosis and mitigation guidance in manufacturing, using LPBF as a representative, safety-critical case study. The proposed ontology-integrated LLM-based decision support system for LPBF defect analysis and mitigation guidance is built on a knowledge base containing 27 known LPBF defect types organized into hierarchical categories and causal relationships. The developed system supports fuzzy natural language queries for systematic knowledge retrieval, literature-supported explanation of defects, and guidance on defect causes and mitigation strategies derived from encoded process knowledge. Furthermore, a multimodal image-assessment module based on foundation models enables descriptor-guided interpretation of representative microscopic defect images through semantic alignment scoring. The proposed framework was evaluated through qualitative comparisons with general-purpose vision-language models, an ablation study, and an inter-rater reliability analysis. Evaluation on the literature-derived dataset showed that the fully integrated configuration outperformed the other three evaluated system configurations, achieving a macro-average F1 score of 0.808. Additionally, inter-rater reliability analysis using Cohen's kappa indicated substantial agreement between the model outputs and the literature-derived reference labels. These findings suggest that ontology-guided knowledge representation can improve the consistency, interpretability, and practical usefulness of LLM-assisted LPBF defect analysis.", "ai_relevance_score": 9, "ai_relevance_reason": "strong=2,weak=3,tech=4,always_ai_source", "topic_tags": ["Model Release", "Application", "Policy", "Research", "Capital", "Safety"], "entities": ["Knowledge", "Driven LLM", "Based Decision", "Support System", "Explainable Defect Analysis", "Mitigation Guidance"], "event_type": "Release", "sentiment": "pos", "impact_score": 100.0, "risk_tags": ["Safety"], "opportunity_tags": ["Developer Tooling"], "evidence": ["A Knowledge-Driven LLM-Based Decision-Support System for Explainable Defect Analysis and Mitigation Guidance in Laser Powder Bed Fusion", "arXiv:2605.01100v1 Announce Type: new Abstract: This work presents a knowledge-driven decision-support system that integrates structured defect knowledge with LLM-based reasoning to provide explainable defect diagnosis and mitigation guidance in manufacturing, using LPBF as a representative, safety-critical case study.", "The proposed ontology-integrated LLM-based decision support system for LPBF defect analysis and mitigation guidance is built on a knowledge base containing 27 known LPBF defect types organized into hierarchical categories and causal relationships."], "extract_confidence": 0.98}, {"id": "f0aa5f4311ae1e94", "title": "SAP bets $1.16B on 18-month-old German AI lab and says yes to NemoClaw", "source": "TechCrunch AI", "source_type": "media", "source_weight": 0.84, "source_region": "us", "url": "https://techcrunch.com/2026/05/05/sap-bets-1-16b-on-18-month-old-german-ai-lab-and-says-yes-to-nemoclaw/", "published_at": "2026-05-05T23:50:10+00:00", "language": "en", "raw_summary": "SAP plans to buy German AI startup Prior Labs and invest heavily in it. It is also prohibiting customers' agents use to a select few like Nvidia's NemoClaw.", "ai_relevance_score": 7, "ai_relevance_reason": "strong=1,weak=3,tech=1,always_ai_source", "topic_tags": ["Application", "Policy"], "entities": ["NVIDIA", "SAP", "German", "NemoClaw SAP", "Prior Labs", "Nvidia"], "event_type": "Policy", "sentiment": "neu", "impact_score": 99.8, "risk_tags": [], "opportunity_tags": ["Developer Tooling"], "evidence": ["SAP bets $1.16B on 18-month-old German AI lab and says yes to NemoClaw", "SAP plans to buy German AI startup Prior Labs and invest heavily in it.", "It is also prohibiting customers' agents use to a select few like Nvidia's NemoClaw."], "extract_confidence": 0.98}, {"id": "35c6edc611c4955d", "title": "CAISI Signs Agreements Regarding Frontier AI National Security Testing With Google DeepMind, Microsoft and xAI - National Institute of Standards and Technology (.gov)", "source": "Google News EN", "source_type": "aggregator", "source_weight": 0.78, "source_region": "global", "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNcVVVcGZjcGM0aUswU2dyUUxVTFlhTThiZEZldkRoaVU5MnhMVUVDV05ENUVXTHU5YmR0a3RTZWRXcC1WRkRneWgtOUd0WEd6TGdxQXhLODBSaHY4dkFvWHI1ZHBoUjdrbkU5NExPWEE1emxBYmJtRWdLZUtYQnBnTFl6Zmtxd2k5ekoxR1RtcTlBYlJ3STJySElUQlBEd0VBc2hNcGZ6Q0NmN3BwUXFwQnF6S0lzekk?oc=5", "published_at": "2026-05-05T12:00:00+00:00", "language": "en", "raw_summary": "CAISI Signs Agreements Regarding Frontier AI National Security Testing With Google DeepMind, Microsoft and xAI National Institute of Standards and Technology (.gov)", "ai_relevance_score": 4, "ai_relevance_reason": "strong=1,weak=2", "topic_tags": ["Safety"], "entities": ["Google", "Microsoft", "DeepMind", "CAISI Signs Agreements", "Regarding Frontier", "National Security Testing", "With Google DeepMind", "National Institute"], "event_type": "General", "sentiment": "neu", "impact_score": 87.6, "risk_tags": ["Safety"], "opportunity_tags": [], "evidence": ["CAISI Signs Agreements Regarding Frontier AI National Security Testing With Google DeepMind, Microsoft and xAI - National Institute of Standards and Technology (.gov)", "CAISI Signs Agreements Regarding Frontier AI National Security Testing With Google DeepMind, Microsoft and xAI National Institute of Standards and Technology (.gov)"], "extract_confidence": 0.98}, {"id": "35113db94d6bdf0d", "title": "GPT-5.5 Instant: smarter, clearer, and more personalized", "source": "OpenAI News", "source_type": "official", "source_weight": 0.9, "source_region": "global", "url": "https://openai.com/index/gpt-5-5-instant", "published_at": "2026-05-05T10:00:00+00:00", "language": "en", "raw_summary": "GPT-5.5 Instant updates ChatGPT’s default model with smarter, more accurate answers, reduced hallucinations, and improved personalization controls.", "ai_relevance_score": 5, "ai_relevance_reason": "strong=1,weak=1,tech=1,always_ai_source", "topic_tags": ["Model Release"], "entities": ["GPT", "Instant", "ChatGPT"], "event_type": "General", "sentiment": "pos", "impact_score": 86.0, "risk_tags": ["Safety"], "opportunity_tags": [], "evidence": ["GPT-5.5 Instant: smarter, clearer, and more personalized", "GPT-5.5 Instant updates ChatGPT’s default model with smarter, more accurate answers, reduced hallucinations, and improved personalization controls."], "extract_confidence": 0.98}, {"id": "14bc07a2803efb7f", "title": "New ways to buy ChatGPT ads", "source": "OpenAI News", "source_type": "official", "source_weight": 0.9, "source_region": "global", "url": "https://openai.com/index/new-ways-to-buy-chatgpt-ads", "published_at": "2026-05-05T00:00:00+00:00", "language": "en", "raw_summary": "OpenAI expands ChatGPT ads with a beta self-serve Ads Manager, CPC bidding, and enhanced measurement tools—built to protect privacy and keep conversations separate from ads.", "ai_relevance_score": 8, "ai_relevance_reason": "strong=2,weak=2,tech=1,always_ai_source", "topic_tags": ["Model Release"], "entities": ["OpenAI", "New", "ChatGPT", "Ads Manager", "CPC"], "event_type": "General", "sentiment": "neu", "impact_score": 86.0, "risk_tags": [], "opportunity_tags": [], "evidence": ["New ways to buy ChatGPT ads", "OpenAI expands ChatGPT ads with a beta self-serve Ads Manager, CPC bidding, and enhanced measurement tools—built to protect privacy and keep conversations separate from ads."], "extract_confidence": 0.98}];
+    const TREND_META = {"topic_counter": {"Application": 13, "Model Release": 12, "Infrastructure": 3, "Research": 9, "Capital": 2, "Policy": 7, "Safety": 5}, "event_counter": {"General": 9, "Research": 1, "Policy": 2, "Release": 8}, "sentiment_counter": {"neu": 13, "pos": 4, "neg": 3}, "risk_counter": {"Safety": 5}};
+    const state = {
+      source: "all",
+      language: "en",
+      sortMode: "hot"
+    };
+
+    const sortLabelMap = {
+      hot: "Hot Score",
+      impact: "Impact Score",
+      newest: "Newest First",
+      confidence: "Confidence"
+    };
+
+    function recencyScore(isoTime) {
+      const now = Date.now();
+      const ts = Date.parse(isoTime);
+      if (Number.isNaN(ts)) return 40;
+      const deltaHours = (now - ts) / 3600000;
+      if (deltaHours <= 24) return 100;
+      if (deltaHours <= 72) return 80;
+      if (deltaHours <= 24 * 7) return 65;
+      if (deltaHours <= 24 * 30) return 50;
+      return 30;
+    }
+
+    function hotScore(row) {
+      const impact = Number(row.impact_score || 0);
+      const src = Number(row.source_weight || 0.7) * 100;
+      const rec = recencyScore(row.published_at);
+      const topicCount = Math.min((row.topic_tags || []).length, 3) * 20;
+      return Number((0.35 * impact + 0.25 * src + 0.20 * rec + 0.20 * topicCount).toFixed(2));
+    }
+
+    function buildFilters() {
+      const sourceFilter = document.getElementById("sourceFilter");
+      const uniqueSources = Array.from(new Set(RAW_RECORDS.map((r) => r.source))).sort();
+      sourceFilter.innerHTML = ['<option value="all">All Sources</option>', ...uniqueSources.map((s) => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`)].join("");
+      sourceFilter.addEventListener("change", (e) => {
+        state.source = e.target.value;
+        updateDashboard();
+      });
+
+      const chips = Array.from(document.querySelectorAll(".chip"));
+      chips.forEach((chip) => {
+        chip.addEventListener("click", () => {
+          chips.forEach((c) => c.classList.remove("active"));
+          chip.classList.add("active");
+          state.language = chip.dataset.lang;
+          updateDashboard();
+        });
+      });
+
+      const sortMode = document.getElementById("sortMode");
+      sortMode.addEventListener("change", (e) => {
+        state.sortMode = e.target.value;
+        updateDashboard();
+      });
+
+      const exportCsvBtn = document.getElementById("exportCsvBtn");
+      exportCsvBtn.addEventListener("click", () => {
+        const filtered = filterRecords();
+        const sorted = sortedRecords(filtered);
+        exportFilteredCSV(sorted);
+      });
+    }
+
+    function filterRecords() {
+      return RAW_RECORDS.filter((row) => {
+        const sourceOk = state.source === "all" || row.source === state.source;
+        const languageOk = state.language === "all" || row.language === state.language;
+        return sourceOk && languageOk;
+      });
+    }
+
+    function sortedRecords(rows) {
+      const cloned = [...rows];
+      if (state.sortMode === "newest") {
+        cloned.sort((a, b) => Date.parse(b.published_at || 0) - Date.parse(a.published_at || 0));
+      } else if (state.sortMode === "impact") {
+        cloned.sort((a, b) => (b.impact_score || 0) - (a.impact_score || 0));
+      } else if (state.sortMode === "confidence") {
+        cloned.sort((a, b) => (b.extract_confidence || 0) - (a.extract_confidence || 0));
+      } else {
+        cloned.sort((a, b) => hotScore(b) - hotScore(a));
+      }
+      return cloned;
+    }
+
+    function aggregateTopics(rows) {
+      const counter = new Map();
+      rows.forEach((row) => {
+        const tags = (row.topic_tags || []).length ? row.topic_tags : ["General"];
+        tags.forEach((tag) => counter.set(tag, (counter.get(tag) || 0) + 1));
+      });
+      return Array.from(counter.entries()).sort((a, b) => b[1] - a[1]).slice(0, 8);
+    }
+
+    function aggregateSentiment(rows) {
+      const counts = { pos: 0, neu: 0, neg: 0 };
+      rows.forEach((row) => {
+        const key = row.sentiment || "neu";
+        if (counts[key] === undefined) counts[key] = 0;
+        counts[key] += 1;
+      });
+      return counts;
+    }
+
+    function aggregateTimeline(rows) {
+      const counter = new Map();
+      rows.forEach((row) => {
+        const d = Date.parse(row.published_at || "");
+        if (Number.isNaN(d)) return;
+        const key = new Date(d).toISOString().slice(0, 10);
+        counter.set(key, (counter.get(key) || 0) + 1);
+      });
+      return Array.from(counter.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+    }
+
+    function stats(rows) {
+      const total = rows.length;
+      const avgImpact = total ? rows.reduce((acc, r) => acc + (r.impact_score || 0), 0) / total : 0;
+      const avgConf = total ? rows.reduce((acc, r) => acc + (r.extract_confidence || 0), 0) / total : 0;
+      const riskCount = rows.filter((r) => (r.risk_tags || []).length > 0).length;
+      return {
+        total,
+        avgImpact: Number(avgImpact.toFixed(1)),
+        avgConf: Number((avgConf * 100).toFixed(1)),
+        riskCount
+      };
+    }
+
+    function animateValue(el, target, suffix = "") {
+      const previous = Number((el.dataset.value || "0").replace("%", ""));
+      const delta = target - previous;
+      const duration = 420;
+      const start = performance.now();
+      el.dataset.value = String(target);
+
+      function step(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = previous + delta * eased;
+        el.textContent = `${current.toFixed(suffix ? 1 : 0)}${suffix}`;
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    function renderKpis(currentStats) {
+      animateValue(document.querySelector('[data-kpi="total"]'), currentStats.total);
+      animateValue(document.querySelector('[data-kpi="impact"]'), currentStats.avgImpact);
+      animateValue(document.querySelector('[data-kpi="confidence"]'), currentStats.avgConf, "%");
+      animateValue(document.querySelector('[data-kpi="risk"]'), currentStats.riskCount);
+      document.getElementById("activeRecordCount").textContent = String(currentStats.total);
+    }
+
+    function renderTopics(topicEntries) {
+      const target = document.getElementById("topicBars");
+      if (!topicEntries.length) {
+        target.innerHTML = '<div class="empty">No topic data under current filter.</div>';
+        return;
+      }
+      const max = Math.max(...topicEntries.map(([, count]) => count), 1);
+      target.innerHTML = topicEntries.map(([tag, count]) => {
+        const width = Math.round((count / max) * 100);
+        return `
+          <div class="topic-row">
+            <div class="topic-head"><span>${escapeHtml(tag)}</span><strong>${count}</strong></div>
+            <div class="topic-track"><div class="topic-fill" style="width:${width}%"></div></div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderSentiment(counts) {
+      const total = Object.values(counts).reduce((acc, n) => acc + n, 0) || 1;
+      const pos = counts.pos || 0;
+      const neu = counts.neu || 0;
+      const neg = counts.neg || 0;
+      const posDeg = (pos / total) * 360;
+      const neuDeg = (neu / total) * 360;
+      const negDeg = 360 - posDeg - neuDeg;
+
+      const donut = document.getElementById("sentimentDonut");
+      donut.style.background = `conic-gradient(#16a085 0deg ${posDeg}deg, #2e7dbe ${posDeg}deg ${(posDeg + neuDeg).toFixed(2)}deg, #e25555 ${(posDeg + neuDeg).toFixed(2)}deg 360deg)`;
+      document.getElementById("donutTotal").textContent = String(total);
+
+      const legend = document.getElementById("sentimentLegend");
+      const rows = [
+        { key: "Positive", color: "#16a085", value: pos },
+        { key: "Neutral", color: "#2e7dbe", value: neu },
+        { key: "Negative", color: "#e25555", value: neg }
+      ];
+      legend.innerHTML = rows.map((row) => {
+        const pct = ((row.value / total) * 100).toFixed(1);
+        return `
+          <div class="legend-item">
+            <span class="legend-left"><span class="dot" style="background:${row.color}"></span>${row.key}</span>
+            <strong>${row.value} · ${pct}%</strong>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderTimeline(points) {
+      const svg = document.getElementById("timelineSvg");
+      const axis = document.getElementById("timelineAxis");
+      if (!points.length) {
+        svg.innerHTML = "";
+        axis.innerHTML = "<span>No timeline data</span>";
+        return;
+      }
+
+      const width = 740;
+      const height = 170;
+      const padding = 16;
+      const maxY = Math.max(...points.map(([, value]) => value), 1);
+      const span = Math.max(points.length - 1, 1);
+      const coords = points.map(([date, value], idx) => {
+        const x = padding + ((width - 2 * padding) * idx) / span;
+        const y = height - padding - ((height - 2 * padding) * value) / maxY;
+        return { date, value, x: Number(x.toFixed(2)), y: Number(y.toFixed(2)) };
+      });
+
+      const linePath = coords.map((p, i) => `${i === 0 ? "M" : "L"}${p.x},${p.y}`).join(" ");
+      const areaPath = `${linePath} L${coords[coords.length - 1].x},${height - padding} L${coords[0].x},${height - padding} Z`;
+
+      svg.innerHTML = `
+        <defs>
+          <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(19,160,141,0.42)"/>
+            <stop offset="100%" stop-color="rgba(19,160,141,0.03)"/>
+          </linearGradient>
+        </defs>
+        <path d="${areaPath}" fill="url(#areaGrad)"></path>
+        <path d="${linePath}" fill="none" stroke="#118f7f" stroke-width="3" stroke-linecap="round"></path>
+        ${coords.map((p) => `<circle cx="${p.x}" cy="${p.y}" r="4.6" fill="#fff" stroke="#118f7f" stroke-width="2"><title>${p.date} · ${p.value}</title></circle>`).join("")}
+      `;
+
+      const first = points[0][0];
+      const last = points[points.length - 1][0];
+      axis.innerHTML = `<span>${first}</span><span>${last}</span>`;
+    }
+
+    function sentimentBadge(sentiment) {
+      if (sentiment === "pos") return "Positive";
+      if (sentiment === "neg") return "Negative";
+      return "Neutral";
+    }
+
+    function renderEvents(rows) {
+      const container = document.getElementById("eventsList");
+      if (!rows.length) {
+        container.innerHTML = '<div class="empty">No records match the current filters.</div>';
+        return;
+      }
+
+      container.innerHTML = rows.slice(0, 10).map((row) => {
+        const evidence = (row.evidence || []).slice(0, 1).map((line) => `<div class="pill">${escapeHtml(line.slice(0, 120))}</div>`).join("");
+        const topicPills = (row.topic_tags || []).slice(0, 3).map((tag) => `<span class="pill">${escapeHtml(tag)}</span>`).join("") || '<span class="pill">General</span>';
+        const score = hotScore(row);
+        return `
+          <article class="event-card">
+            <h4 class="event-title">${escapeHtml(row.title || "Untitled")}</h4>
+            <div class="event-meta">
+              <span>${escapeHtml(row.source || "Unknown Source")}</span>
+              <span>•</span>
+              <span>${escapeHtml(row.source_type || "unknown")}</span>
+              <span>•</span>
+              <span>${escapeHtml((row.published_at || "").replace("T", " ").replace("+00:00", " UTC"))}</span>
+              <span>•</span>
+              <span>${sentimentBadge(row.sentiment)}</span>
+            </div>
+            <div class="pills">${topicPills}</div>
+            <div class="score">Hot <strong>${score}</strong> · Impact <strong>${Number(row.impact_score || 0).toFixed(1)}</strong> · Confidence <strong>${Math.round((row.extract_confidence || 0) * 100)}%</strong> · Relevance <strong>${Number(row.ai_relevance_score || 0).toFixed(1)}</strong></div>
+            <div class="pills">${evidence}</div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function csvEscape(value) {
+      const text = String(value ?? "");
+      if (text.includes(",") || text.includes(""") || text.includes("\n")) {
+        return `"${text.replace(/"/g, '""')}"`;
+      }
+      return text;
+    }
+
+    function exportFilteredCSV(rows) {
+      const headers = [
+        "title",
+        "source",
+        "source_type",
+        "published_at",
+        "language",
+        "event_type",
+        "sentiment",
+        "impact_score",
+        "hot_score",
+        "ai_relevance_score",
+        "extract_confidence",
+        "topic_tags",
+        "risk_tags",
+        "opportunity_tags",
+        "url"
+      ];
+
+      const lines = [headers.join(",")];
+      rows.forEach((row) => {
+        const hot = hotScore(row);
+        const values = [
+          row.title || "",
+          row.source || "",
+          row.source_type || "",
+          row.published_at || "",
+          row.language || "",
+          row.event_type || "",
+          row.sentiment || "",
+          Number(row.impact_score || 0).toFixed(1),
+          hot,
+          Number(row.ai_relevance_score || 0).toFixed(1),
+          Number(row.extract_confidence || 0).toFixed(2),
+          (row.topic_tags || []).join("|"),
+          (row.risk_tags || []).join("|"),
+          (row.opportunity_tags || []).join("|"),
+          row.url || ""
+        ];
+        lines.push(values.map(csvEscape).join(","));
+      });
+
+      const csvContent = lines.join("\n");
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const now = new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-");
+      const filename = `daily-ai-insight-${now}.csv`;
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function updateDashboard() {
+      const filtered = filterRecords();
+      const sorted = sortedRecords(filtered);
+
+      renderKpis(stats(filtered));
+      renderTopics(aggregateTopics(filtered));
+      renderSentiment(aggregateSentiment(filtered));
+      renderTimeline(aggregateTimeline(filtered));
+      renderEvents(sorted);
+
+      document.getElementById("sortLabel").textContent = sortLabelMap[state.sortMode];
+    }
+
+    function initSnapshot() {
+      const latest = RAW_RECORDS
+        .map((r) => Date.parse(r.published_at || ""))
+        .filter((v) => !Number.isNaN(v))
+        .sort((a, b) => b - a)[0];
+      if (!latest) {
+        document.getElementById("snapshotTime").textContent = "N/A";
+        return;
+      }
+      document.getElementById("snapshotTime").textContent = new Date(latest).toISOString().replace("T", " ").slice(0, 16);
+    }
+
+    buildFilters();
+    initSnapshot();
+    updateDashboard();
+  </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+﻿{
+  "name": "Daily AI Insight Schema",
+  "version": "1.1.0",
+  "description": "Schema for structured extraction of AI-related news items with product-grade quality fields.",
+  "required": [
+    "id",
+    "title",
+    "source",
+    "source_type",
+    "source_weight",
+    "source_region",
+    "url",
+    "published_at",
+    "language",
+    "raw_summary",
+    "ai_relevance_score",
+    "ai_relevance_reason",
+    "topic_tags",
+    "entities",
+    "event_type",
+    "sentiment",
+    "impact_score",
+    "risk_tags",
+    "opportunity_tags",
+    "evidence",
+    "extract_confidence"
+  ],
+  "fields": {
+    "id": {
+      "type": "string",
+      "description": "Unique id generated from hash(url + title)."
+    },
+    "title": {
+      "type": "string",
+      "description": "News title after normalization and encoding repair when needed."
+    },
+    "source": {
+      "type": "string",
+      "description": "News source channel."
+    },
+    "source_type": {
+      "type": "string(enum: aggregator/media/official/social/research/fallback)",
+      "description": "Source category used for strategy and weighting."
+    },
+    "source_weight": {
+      "type": "number(0-1)",
+      "description": "Source reliability weight used in impact and hot scoring."
+    },
+    "source_region": {
+      "type": "string",
+      "description": "Source market region hint (global/us/cn etc.)."
+    },
+    "url": {
+      "type": "string",
+      "description": "Article url."
+    },
+    "published_at": {
+      "type": "string(datetime-iso8601)",
+      "description": "Publish time normalized to UTC."
+    },
+    "language": {
+      "type": "string(enum: zh/en/other)",
+      "description": "Detected language."
+    },
+    "raw_summary": {
+      "type": "string",
+      "description": "Cleaned summary from source feed."
+    },
+    "ai_relevance_score": {
+      "type": "number(0-10)",
+      "description": "AI relevance score used for quality filtering."
+    },
+    "ai_relevance_reason": {
+      "type": "string",
+      "description": "Short reason trail for relevance scoring."
+    },
+    "topic_tags": {
+      "type": "array[string]",
+      "description": "Topic tags (model/application/policy/research/capital etc.)."
+    },
+    "entities": {
+      "type": "array[string]",
+      "description": "Named entities such as companies/orgs/products."
+    },
+    "event_type": {
+      "type": "string",
+      "description": "Main event type (Release/Funding/Policy/Incident/Research/General)."
+    },
+    "sentiment": {
+      "type": "string(enum: pos/neu/neg)",
+      "description": "Simple sentiment orientation."
+    },
+    "impact_score": {
+      "type": "number(0-100)",
+      "description": "Estimated event impact score."
+    },
+    "risk_tags": {
+      "type": "array[string]",
+      "description": "Detected risk dimensions."
+    },
+    "opportunity_tags": {
+      "type": "array[string]",
+      "description": "Detected opportunity dimensions."
+    },
+    "evidence": {
+      "type": "array[string]",
+      "description": "Evidence sentences from title/summary."
+    },
+    "extract_confidence": {
+      "type": "number(0-1)",
+      "description": "Heuristic confidence for extracted result."
+    }
+  }
+}

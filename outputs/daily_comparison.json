@@ -1,0 +1,230 @@
+{
+  "generated_at": "2026-05-06T10:12:53.613701+00:00",
+  "current_snapshot": "C:\\Users\\xwhhh\\Desktop\\test\\outputs\\history\\run_20260506_181253",
+  "previous_snapshot": "C:\\Users\\xwhhh\\Desktop\\test\\outputs\\history\\run_20260506_181244",
+  "counts": {
+    "current": {
+      "raw": 20,
+      "structured": 20,
+      "hot": 5
+    },
+    "previous": {
+      "raw": 20,
+      "structured": 20,
+      "hot": 5
+    },
+    "delta": {
+      "raw": 0,
+      "structured": 0,
+      "hot": 0
+    }
+  },
+  "quality_delta": {
+    "low_confidence_delta": 0,
+    "no_topic_delta": 0,
+    "schema_error_delta": 0,
+    "source_diversity_delta": 0
+  },
+  "distribution_delta": {
+    "source_distribution": [
+      {
+        "key": "arXiv cs.AI",
+        "current": 8,
+        "previous": 7,
+        "delta": 1
+      },
+      {
+        "key": "TechCrunch AI",
+        "current": 3,
+        "previous": 2,
+        "delta": 1
+      },
+      {
+        "key": "Hacker News AI",
+        "current": 3,
+        "previous": 4,
+        "delta": -1
+      },
+      {
+        "key": "Google News EN",
+        "current": 1,
+        "previous": 2,
+        "delta": -1
+      },
+      {
+        "key": "Google News ZH",
+        "current": 3,
+        "previous": 3,
+        "delta": 0
+      },
+      {
+        "key": "OpenAI News",
+        "current": 2,
+        "previous": 2,
+        "delta": 0
+      }
+    ],
+    "source_type_distribution": [
+      {
+        "key": "research",
+        "current": 8,
+        "previous": 7,
+        "delta": 1
+      },
+      {
+        "key": "aggregator",
+        "current": 4,
+        "previous": 5,
+        "delta": -1
+      },
+      {
+        "key": "social",
+        "current": 3,
+        "previous": 4,
+        "delta": -1
+      },
+      {
+        "key": "media",
+        "current": 3,
+        "previous": 2,
+        "delta": 1
+      },
+      {
+        "key": "official",
+        "current": 2,
+        "previous": 2,
+        "delta": 0
+      }
+    ],
+    "language_distribution": [
+      {
+        "key": "en",
+        "current": 17,
+        "previous": 17,
+        "delta": 0
+      },
+      {
+        "key": "zh",
+        "current": 3,
+        "previous": 3,
+        "delta": 0
+      }
+    ]
+  },
+  "trend_delta": {
+    "topics": [
+      {
+        "key": "Application",
+        "current": 13,
+        "previous": 11,
+        "delta": 2
+      },
+      {
+        "key": "Model Release",
+        "current": 12,
+        "previous": 13,
+        "delta": -1
+      },
+      {
+        "key": "Research",
+        "current": 9,
+        "previous": 8,
+        "delta": 1
+      },
+      {
+        "key": "Policy",
+        "current": 7,
+        "previous": 6,
+        "delta": 1
+      },
+      {
+        "key": "Capital",
+        "current": 2,
+        "previous": 1,
+        "delta": 1
+      },
+      {
+        "key": "Safety",
+        "current": 5,
+        "previous": 5,
+        "delta": 0
+      },
+      {
+        "key": "Infrastructure",
+        "current": 3,
+        "previous": 3,
+        "delta": 0
+      }
+    ],
+    "event_types": [
+      {
+        "key": "General",
+        "current": 9,
+        "previous": 10,
+        "delta": -1
+      },
+      {
+        "key": "Release",
+        "current": 8,
+        "previous": 7,
+        "delta": 1
+      },
+      {
+        "key": "Policy",
+        "current": 2,
+        "previous": 2,
+        "delta": 0
+      },
+      {
+        "key": "Research",
+        "current": 1,
+        "previous": 1,
+        "delta": 0
+      }
+    ],
+    "sentiments": [
+      {
+        "key": "neu",
+        "current": 13,
+        "previous": 13,
+        "delta": 0
+      },
+      {
+        "key": "pos",
+        "current": 4,
+        "previous": 4,
+        "delta": 0
+      },
+      {
+        "key": "neg",
+        "current": 3,
+        "previous": 3,
+        "delta": 0
+      }
+    ],
+    "risks": [
+      {
+        "key": "Regulatory",
+        "current": 0,
+        "previous": 1,
+        "delta": -1
+      },
+      {
+        "key": "Safety",
+        "current": 5,
+        "previous": 5,
+        "delta": 0
+      }
+    ]
+  },
+  "top_event_diff": {
+    "new_events": [],
+    "removed_events": [],
+    "unchanged_count": 5
+  },
+  "story_churn": {
+    "new_story_count": 3,
+    "removed_story_count": 3,
+    "common_story_count": 17
+  }
+}

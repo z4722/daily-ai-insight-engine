@@ -1,0 +1,70 @@
+{
+  "generated_at": "2026-05-06T10:06:42.835425+00:00",
+  "schema_version": "1.1.0",
+  "run_params": {
+    "max_items": 20,
+    "per_source_limit": 8,
+    "min_required": 10,
+    "min_relevance_score": 3,
+    "min_per_source": 2,
+    "extract_batch_size": 5,
+    "extract_mode": "rule",
+    "llm_model": "gpt-4.1-mini",
+    "llm_timeout_sec": 45
+  },
+  "counts": {
+    "raw": 20,
+    "structured": 20,
+    "hot": 5
+  },
+  "artifacts": {
+    "raw": "C:\\Users\\xwhhh\\Desktop\\test\\data\\raw\\raw_news.jsonl",
+    "structured": "C:\\Users\\xwhhh\\Desktop\\test\\data\\processed\\structured_news.jsonl",
+    "report": "C:\\Users\\xwhhh\\Desktop\\test\\outputs\\daily_report.md",
+    "report_json": "C:\\Users\\xwhhh\\Desktop\\test\\outputs\\daily_report.json",
+    "visual": "C:\\Users\\xwhhh\\Desktop\\test\\outputs\\visualization.html",
+    "pipeline_log": "C:\\Users\\xwhhh\\Desktop\\test\\outputs\\pipeline.log"
+  },
+  "collector_logs": [
+    "[OK] Google News EN: 1",
+    "[OK] Google News ZH: 6",
+    "[OK] TechCrunch AI: 8",
+    "[OK] arXiv cs.AI: 8",
+    "[OK] OpenAI News: 8",
+    "[OK] Hacker News AI: 3"
+  ],
+  "quality": {
+    "low_confidence": 0,
+    "no_topic": 0,
+    "schema_error_count": 0,
+    "source_diversity_count": 6,
+    "llm_batches": 0,
+    "rule_batches": 4
+  },
+  "dataset_profile": {
+    "source_distribution": {
+      "Hacker News AI": 3,
+      "Google News ZH": 3,
+      "TechCrunch AI": 3,
+      "arXiv cs.AI": 8,
+      "Google News EN": 1,
+      "OpenAI News": 2
+    },
+    "source_type_distribution": {
+      "social": 3,
+      "aggregator": 4,
+      "media": 3,
+      "research": 8,
+      "official": 2
+    },
+    "language_distribution": {
+      "en": 17,
+      "zh": 3
+    },
+    "avg_confidence": 0.946,
+    "avg_impact_score": 93.96,
+    "avg_relevance_score": 5.75,
+    "high_impact_count": 20,
+    "low_confidence_count": 0
+  }
+}

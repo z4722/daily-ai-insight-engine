@@ -1,0 +1,46 @@
+2026-05-06 18:12:40,137 | INFO | Loading schema config: C:\Users\xwhhh\Desktop\test\configs\schema.json
+2026-05-06 18:12:40,138 | INFO | Loaded schema version=1.1.0 required_fields=21
+2026-05-06 18:12:40,138 | INFO | Pipeline started: max_items=20 per_source_limit=8 min_required=10 min_relevance=2 min_per_source=2 extract_mode=rule llm_model=gpt-4.1-mini log_level=INFO
+2026-05-06 18:12:40,138 | INFO | Loading source config: C:\Users\xwhhh\Desktop\test\configs\sources.json
+2026-05-06 18:12:40,138 | INFO | Loaded 6 enabled sources (disabled=0)
+2026-05-06 18:12:40,138 | INFO | Collection start: source_count=6 per_source_limit=8 target_max=20 min_relevance=2 min_per_source=2
+2026-05-06 18:12:40,138 | INFO | Fetching RSS: source=Google News EN limit=8
+2026-05-06 18:12:40,858 | INFO | Fetched RSS done: source=Google News EN scanned=16 kept=2 skipped_non_ai=14 skipped_low_relevance=0 skipped_noise=0 missing_title=0 missing_summary=0 missing_url=0 cost=0.72s
+2026-05-06 18:12:40,859 | INFO | Source collected: Google News EN items=2 total_so_far=2
+2026-05-06 18:12:40,859 | INFO | Fetching RSS: source=Google News ZH limit=8
+2026-05-06 18:12:41,277 | INFO | Fetched RSS done: source=Google News ZH scanned=16 kept=6 skipped_non_ai=7 skipped_low_relevance=0 skipped_noise=3 missing_title=0 missing_summary=0 missing_url=0 cost=0.42s
+2026-05-06 18:12:41,278 | INFO | Source collected: Google News ZH items=6 total_so_far=8
+2026-05-06 18:12:41,278 | INFO | Fetching RSS: source=TechCrunch AI limit=8
+2026-05-06 18:12:41,705 | INFO | Fetched RSS done: source=TechCrunch AI scanned=8 kept=8 skipped_non_ai=0 skipped_low_relevance=0 skipped_noise=0 missing_title=0 missing_summary=0 missing_url=0 cost=0.43s
+2026-05-06 18:12:41,705 | INFO | Source collected: TechCrunch AI items=8 total_so_far=16
+2026-05-06 18:12:41,705 | INFO | Fetching RSS: source=arXiv cs.AI limit=8
+2026-05-06 18:12:41,824 | INFO | Fetched RSS done: source=arXiv cs.AI scanned=8 kept=8 skipped_non_ai=0 skipped_low_relevance=0 skipped_noise=0 missing_title=0 missing_summary=0 missing_url=0 cost=0.12s
+2026-05-06 18:12:41,825 | INFO | Source collected: arXiv cs.AI items=8 total_so_far=24
+2026-05-06 18:12:41,825 | INFO | Fetching RSS: source=OpenAI News limit=8
+2026-05-06 18:12:42,981 | INFO | Fetched RSS done: source=OpenAI News scanned=8 kept=8 skipped_non_ai=0 skipped_low_relevance=0 skipped_noise=0 missing_title=0 missing_summary=1 missing_url=0 cost=1.16s
+2026-05-06 18:12:42,982 | INFO | Source collected: OpenAI News items=8 total_so_far=32
+2026-05-06 18:12:42,982 | INFO | Fetching RSS: source=Hacker News AI limit=8
+2026-05-06 18:12:44,286 | INFO | Fetched RSS done: source=Hacker News AI scanned=16 kept=4 skipped_non_ai=12 skipped_low_relevance=0 skipped_noise=0 missing_title=0 missing_summary=0 missing_url=0 cost=1.30s
+2026-05-06 18:12:44,286 | INFO | Source collected: Hacker News AI items=4 total_so_far=36
+2026-05-06 18:12:44,286 | INFO | Primary collection reached target without fallback: 36
+2026-05-06 18:12:44,287 | INFO | Dedup summary: input=36 output=36 dup_url=0 dup_title=0
+2026-05-06 18:12:44,287 | INFO | Collection completed: unique_count=36 final_count=20 min_per_source=2
+2026-05-06 18:12:44,287 | INFO | Structured extraction uses batching: batch_size=5
+2026-05-06 18:12:44,287 | INFO | Structured extraction batch start: index=1 size=5
+2026-05-06 18:12:44,289 | INFO | Structured extraction batch done: index=1 progress=5/20
+2026-05-06 18:12:44,289 | INFO | Structured extraction batch start: index=2 size=5
+2026-05-06 18:12:44,289 | INFO | Structured extraction batch done: index=2 progress=10/20
+2026-05-06 18:12:44,289 | INFO | Structured extraction batch start: index=3 size=5
+2026-05-06 18:12:44,290 | INFO | Structured extraction batch done: index=3 progress=15/20
+2026-05-06 18:12:44,290 | INFO | Structured extraction batch start: index=4 size=5
+2026-05-06 18:12:44,291 | INFO | Structured extraction batch done: index=4 progress=20/20
+2026-05-06 18:12:44,291 | INFO | Extraction engine usage: llm_batches=0 rule_batches=4
+2026-05-06 18:12:44,291 | INFO | Structured extraction summary: total=20 low_confidence=0 no_topic=0
+2026-05-06 18:12:44,291 | INFO | Analysis summary: hot=5 topic_types=7 risk_types=2
+2026-05-06 18:12:44,292 | INFO | Wrote JSONL: C:\Users\xwhhh\Desktop\test\data\raw\raw_news.jsonl rows=20
+2026-05-06 18:12:44,292 | INFO | Wrote JSONL: C:\Users\xwhhh\Desktop\test\data\processed\structured_news.jsonl rows=20
+2026-05-06 18:12:44,293 | INFO | Rendered visualization: C:\Users\xwhhh\Desktop\test\outputs\visualization.html
+2026-05-06 18:12:44,294 | INFO | Rendered report: C:\Users\xwhhh\Desktop\test\outputs\daily_report.md
+2026-05-06 18:12:44,295 | INFO | Rendered machine-readable report: C:\Users\xwhhh\Desktop\test\outputs\daily_report.json
+2026-05-06 18:12:44,295 | INFO | Run log saved: C:\Users\xwhhh\Desktop\test\outputs\run_log.json
+2026-05-06 18:12:44,295 | INFO | Pipeline finished successfully in 4.16s
