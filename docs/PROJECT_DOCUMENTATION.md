@@ -58,14 +58,14 @@
 8. **Analyze**：影响分/热度分/趋势统计
 9. **Present**：Markdown日报 + JSON日报 + 交互可视化
 
-## 3.1 处理逻辑证明（非摘要拼接）
+## 3.1 处理逻辑证明（结构化流程）
 
-本系统不是“把原文丢给模型输出摘要”，而是显式执行以下流水线：
+本系统通过显式流水线完成结构化处理与分析：
 
 1. **采集与过滤**：按来源逐个采集，计算 `ai_relevance_score`，拦截噪声词（含校园活动类误报）。
 2. **去重**：URL + 标题归一化双重去重，避免重复新闻堆叠影响判断。
 3. **多源均衡抽样**：先满足 `min_per_source`，再按时效补齐，避免单一来源主导。
-4. **分批抽取**：按 `extract_batch_size` 对样本分批处理，而不是一次性全量处理。
+4. **分批抽取**：按 `extract_batch_size` 对样本分批处理，支持批次级追踪与回放。
 5. **结构化抽取**：输出 `topic_tags/entities/event_type/sentiment/risk_tags/opportunity_tags/evidence` 等字段。
 6. **质量校验**：检查 schema required 字段、`extract_confidence`、`no_topic`、`schema_error_count`。
 7. **分析与评分**：基于结构化字段计算 `impact_score/hot_score`，生成热点与趋势。
@@ -117,7 +117,7 @@
 
 ## 4.1 数据治理优先于“摘要漂亮”
 
-核心目标不是简单摘要，而是形成可计算结构化数据，因此加入：
+核心目标是形成可计算结构化数据，因此加入：
 - `ai_relevance_score`
 - `source_type`
 - `source_weight`

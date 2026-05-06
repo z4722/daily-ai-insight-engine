@@ -143,9 +143,9 @@ schtasks /Create /SC DAILY /ST 09:00 /TN "DailyAIInsightUpdate" /TR "powershell 
 - no_topic优化：扩展主题词典 + 兜底推断 + 校园噪声过滤
 - 可视化交互：筛选/排序/动态图表/移动端适配
 
-## 5.1 处理逻辑（明确非摘要拼接）
+## 5.1 处理逻辑（结构化流程）
 
-系统执行的是“采集-清洗-过滤-去重-分批抽取-校验-分析-可视化”的流水线，不是简单摘要拼接。  
+系统执行的是“采集-清洗-过滤-去重-分批抽取-校验-分析-可视化”的流水线，输出结构化结果与质量指标。  
 可直接检查：
 - 结构化字段：`data/processed/structured_news.jsonl`
 - 分批与质量日志：`outputs/pipeline.log`、`outputs/run_log.json`
@@ -189,7 +189,7 @@ python src/main.py --log-level DEBUG
 ## 8. 文档质量门禁（提交前）
 
 1. 处理逻辑是否可审计：清洗、分批、校验是否有明确步骤与证据文件。
-2. 结构化是否充分：是否包含 topic/event/entity/risk/opportunity/evidence，而非摘要拼接。
+2. 结构化是否充分：是否包含 topic/event/entity/risk/opportunity/evidence 等核心字段。
 3. 质量指标是否可追踪：`no_topic`、`schema_error_count`、`llm_batches`、`rule_batches`。
 4. 运行与排障是否可执行：是否提供一键命令、日志路径、失败恢复路径。
 5. 更新机制是否闭环：是否支持自动更新、历史快照、与上一日报自动对比。

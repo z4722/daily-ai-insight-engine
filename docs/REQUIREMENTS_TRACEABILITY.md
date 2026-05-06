@@ -25,7 +25,7 @@ This matrix checks every requirement from the task brief against current impleme
 |---|---|---|
 | Design a structured schema | Done | `configs/schema.json` |
 | Explain why fields are designed this way | Done | `docs/SCHEMA_DESIGN.md` |
-| Not summary-only; must be structured extraction | Done | `data/processed/structured_news.jsonl` |
+| Structured extraction with semantic fields | Done | `data/processed/structured_news.jsonl` |
 
 ## D. Analysis Report
 
@@ -48,12 +48,12 @@ This matrix checks every requirement from the task brief against current impleme
 
 | Requirement | Status | Evidence |
 |---|---|---|
-| No one-shot raw dump to AI for full result | Done | Staged pipeline in `src/main.py` |
+| Staged AI processing pipeline | Done | Multi-stage pipeline in `src/main.py` |
 | Must show processing logic (cleaning/batch/validation) | Done | cleaning + relevance filter + dedup + `extract_batch_size` + schema checks |
 | No screenshot-only submission | Done | Full code/data/report/docs provided |
-| Not just summary concatenation | Done | structured schema + scoring + evidence + trend stats |
+| Structured insight generation | Done | structured schema + scoring + evidence + trend stats |
 
-Verification standard for "not summary stitching":
+Verification standard for structured extraction quality:
 - Structured output must include semantic fields beyond summary:
   - `topic_tags`, `entities`, `event_type`, `risk_tags`, `opportunity_tags`, `evidence`, `impact_score`, `extract_confidence`
 - Run quality log must include process metrics:
