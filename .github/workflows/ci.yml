@@ -1,0 +1,31 @@
+name: ci
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Compile check
+        run: |
+          python -m py_compile src/main.py src/daily_update.py src/smoke_test.py tests/test_daily_update.py
+
+      - name: Run unit tests
+        run: |
+          python -m unittest -v tests.test_daily_update

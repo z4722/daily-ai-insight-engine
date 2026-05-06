@@ -17,6 +17,9 @@ This file tracks operational maintenance notes for Daily AI Insight Engine.
 - Added `src/daily_update.py` for one-command daily refresh + snapshot archive + previous-day comparison.
 - Added auto-generated comparison outputs: `outputs/daily_comparison.md` and `outputs/daily_comparison.json`.
 - Added enterprise doc benchmark file `docs/ENTERPRISE_DOC_BENCHMARK.md` to align writing quality with major vendor doc standards.
+- Added CI workflow for compile checks + offline unit tests.
+- Added repository-level code style baseline (`.editorconfig`, `pyproject.toml`).
+- Added UTF-8 console reconfiguration in CLI entrypoints for mixed-language readability.
 
 ### Health Snapshot
 - Last verified run produced 20 valid records.

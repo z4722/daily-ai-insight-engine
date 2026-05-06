@@ -15,12 +15,15 @@ The format is inspired by Keep a Changelog.
 - Added `src/daily_update.py` to support automated daily refresh + snapshot history + previous-run comparison.
 - Added generated comparison artifacts: `outputs/daily_comparison.md` and `outputs/daily_comparison.json`.
 - Added `docs/ENTERPRISE_DOC_BENCHMARK.md` with public big-tech documentation standard benchmarking and project checklist.
+- Added engineering quality baseline files: `.editorconfig`, `pyproject.toml`, and CI workflow `.github/workflows/ci.yml`.
+- Added offline unit tests for daily comparison core logic: `tests/test_daily_update.py`.
 
 ### Changed
 - Improved dashboard to full-English UI by default with EN preset.
 - Added `Export Filtered CSV` action in the visualization dashboard.
 - Upgraded data pipeline with source taxonomy, relevance scoring, and diversity quota controls.
 - Expanded topic/policy dictionaries and fallback tag inference to reduce `no_topic`.
+- Improved console UTF-8 output handling in CLI entrypoints to reduce mixed-language output garbling on Windows.
 
 ### Fixed
 - Improved collection logs for better filtering reason visibility (`skipped_non_ai / skipped_noise / skipped_low_relevance`).

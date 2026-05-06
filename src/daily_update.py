@@ -384,6 +384,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def main_entry() -> None:
+    main.configure_console_encoding()
     args = parse_args()
     setup_logger(args.log_level)
     history_dir = Path(args.history_dir)

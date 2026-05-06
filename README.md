@@ -6,7 +6,12 @@
 
 ```text
 .
+├─ .editorconfig
+├─ .github/
+│  └─ workflows/
+│     └─ ci.yml
 ├─ CHANGELOG.md
+├─ pyproject.toml
 ├─ configs/
 │  ├─ sources.json
 │  └─ schema.json
@@ -40,6 +45,8 @@
    ├─ daily_update.py
    ├─ main.py
    └─ smoke_test.py
+└─ tests/
+   └─ test_daily_update.py
 ```
 
 ## 2. 运行环境
@@ -82,6 +89,12 @@ python src/smoke_test.py
 ```
 
 测试通过标志：`SMOKE_TEST_PASS`
+
+离线单元测试（不依赖外部新闻源）：
+
+```bash
+python -m unittest -v tests.test_daily_update
+```
 
 ### 3.3 每日自动更新 + 与上一日报对比
 
@@ -153,6 +166,14 @@ python src/main.py --log-level DEBUG
 - 结构化抽取进度与质量告警
 - Schema必填字段校验
 - 报告与可视化文件写出状态
+
+## 6.1 工程质量规范
+
+- 代码风格配置：`pyproject.toml`（Ruff 规则）
+- 编辑器统一配置：`.editorconfig`
+- CI 校验：`.github/workflows/ci.yml`
+  - 编译检查：`py_compile`
+  - 离线单元测试：`tests/test_daily_update.py`
 
 ## 7. 阅读文档
 

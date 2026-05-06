@@ -6,6 +6,7 @@ import json
 import logging
 import os
 import re
+import sys
 import time
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -301,6 +302,16 @@ def ensure_dirs() -> None:
     RAW_DIR.mkdir(parents=True, exist_ok=True)
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def configure_console_encoding() -> None:
+    # Keep Chinese/English mixed output readable on Windows terminals.
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        # Some environments don't support reconfigure(); ignore safely.
+        pass
 
 
 def setup_logger(log_level: str = "INFO") -> None:
@@ -2629,6 +2640,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
+    configure_console_encoding()
     args = parse_args()
     run_log = run(
         max_items=args.max_items,
