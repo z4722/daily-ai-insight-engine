@@ -24,6 +24,7 @@
 │     └─ structured_news.jsonl
 ├─ docs/
 │  ├─ ENTERPRISE_DOC_BENCHMARK.md
+│  ├─ TECHNICAL_RUNBOOK.md
 │  ├─ PROJECT_DOCUMENTATION.md
 │  ├─ SCHEMA_DESIGN.md
 │  ├─ AI_USAGE.md
@@ -178,6 +179,7 @@ python src/main.py --log-level DEBUG
 ## 7. 阅读文档
 
 - 大厂文档对标：`docs/ENTERPRISE_DOC_BENCHMARK.md`
+- 技术运行手册：`docs/TECHNICAL_RUNBOOK.md`
 - 系统与流程：`docs/PROJECT_DOCUMENTATION.md`
 - Schema设计：`docs/SCHEMA_DESIGN.md`
 - AI使用策略：`docs/AI_USAGE.md`
