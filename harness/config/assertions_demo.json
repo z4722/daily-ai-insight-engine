@@ -1,0 +1,11 @@
+﻿{
+  "min_input_items": 10,
+  "max_input_items": 30,
+  "min_top_events": 3,
+  "max_top_events": 5,
+  "max_schema_errors": 0,
+  "max_no_topic": 2,
+  "min_avg_confidence": 0.60,
+  "min_source_diversity": 3,
+  "max_low_confidence_ratio": 0.20
+}

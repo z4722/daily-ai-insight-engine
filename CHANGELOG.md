@@ -7,6 +7,7 @@ The format is inspired by Keep a Changelog.
 ## [Unreleased]
 
 ### Added
+- Added minimal offline harness under `harness/` with fixed dataset, assertion config, and reproducible run artifacts.
 - Added `docs/REQUIREMENTS_TRACEABILITY.md` to map each requirement to implementation evidence.
 - Added `docs/MAINTENANCE_LOG.md` as an operational maintenance ledger and runbook.
 - Added explicit structured extraction batching via `--extract-batch-size`.
@@ -14,7 +15,7 @@ The format is inspired by Keep a Changelog.
 - Added extraction engine counters in run quality metrics: `llm_batches` and `rule_batches`.
 - Added `src/daily_update.py` to support automated daily refresh + snapshot history + previous-run comparison.
 - Added generated comparison artifacts: `outputs/daily_comparison.md` and `outputs/daily_comparison.json`.
-- Added `docs/ENTERPRISE_DOC_BENCHMARK.md` with public big-tech documentation standard benchmarking and project checklist.
+- Added `docs/DOCUMENTATION_STANDARDS.md` with documentation structure, review checklist, and update governance rules.
 - Added engineering quality baseline files: `.editorconfig`, `pyproject.toml`, and CI workflow `.github/workflows/ci.yml`.
 - Added offline unit tests for daily comparison core logic: `tests/test_daily_update.py`.
 

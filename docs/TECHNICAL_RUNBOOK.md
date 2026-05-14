@@ -98,3 +98,26 @@ python -m http.server 8000
 3. 控制运行时间：
 - 降低 `--max-items`
 - 调整 `--extract-batch-size`（如 `4-6`）
+
+## 6. 最小 Harness 运行
+
+运行命令：
+
+```bash
+python harness/run_demo_harness.py
+```
+
+可选参数示例：
+
+```bash
+python harness/run_demo_harness.py --extract-mode rule --extract-batch-size 4
+```
+
+Harness 输出目录：
+- `harness/runs/run_YYYYMMDD_HHMMSS/`
+
+关键产物：
+- `harness_result.json`
+- `harness_result.md`
+- `daily_report.md`
+- `visualization.html`

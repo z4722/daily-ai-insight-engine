@@ -23,13 +23,21 @@
 │  └─ processed/
 │     └─ structured_news.jsonl
 ├─ docs/
-│  ├─ ENTERPRISE_DOC_BENCHMARK.md
+│  ├─ DOCUMENTATION_STANDARDS.md
 │  ├─ TECHNICAL_RUNBOOK.md
 │  ├─ PROJECT_DOCUMENTATION.md
 │  ├─ SCHEMA_DESIGN.md
 │  ├─ AI_USAGE.md
 │  ├─ MAINTENANCE_LOG.md
 │  └─ REQUIREMENTS_TRACEABILITY.md
+├─ harness/
+│  ├─ config/
+│  │  └─ assertions_demo.json
+│  ├─ datasets/
+│  │  └─ demo_input.jsonl
+│  ├─ runs/
+│  ├─ README.md
+│  └─ run_demo_harness.py
 ├─ outputs/
 │  ├─ daily_report.md
 │  ├─ daily_report.json
@@ -49,6 +57,19 @@
 └─ tests/
    └─ test_daily_update.py
 ```
+
+## 1.1 模块总览（各模块做什么）
+
+| 模块 | 作用 | 关键文件 |
+|---|---|---|
+| 采集与抽取引擎 | 执行新闻采集、清洗、相关性过滤、分批结构化抽取、分析与落盘 | `src/main.py` |
+| 每日更新与对比引擎 | 一键更新当日数据、归档历史快照、生成与上次对比报告 | `src/daily_update.py` |
+| 来源与Schema配置 | 管理数据源、字段结构、必填字段约束 | `configs/sources.json`, `configs/schema.json` |
+| 原始与处理后数据 | 保存原始新闻样本与结构化结果 | `data/raw/*`, `data/processed/*` |
+| 日报与可视化产物 | 输出日报、对比报告、可视化页面、运行日志 | `outputs/*` |
+| Prompt模板 | 维护抽取与分析提示词模板 | `prompts/extract_prompt.md`, `prompts/analysis_prompt.md` |
+| 测试与质量保障 | 冒烟测试、离线单元测试、CI流程 | `src/smoke_test.py`, `tests/test_daily_update.py`, `.github/workflows/ci.yml` |
+| 文档体系 | 运行手册、架构说明、Schema说明、需求追踪、维护日志 | `docs/*` |
 
 ## 2. 运行环境
 
@@ -97,7 +118,28 @@ python src/smoke_test.py
 python -m unittest -v tests.test_daily_update
 ```
 
-### 3.3 每日自动更新 + 与上一日报对比
+### 3.3 运行最小 Harness Demo
+
+```bash
+python harness/run_demo_harness.py
+```
+
+可选参数示例：
+
+```bash
+python harness/run_demo_harness.py --extract-mode rule --extract-batch-size 4
+```
+
+Harness 产物输出到 `harness/runs/run_YYYYMMDD_HHMMSS/`，包含：
+- `raw_news.jsonl`
+- `structured_news.jsonl`
+- `daily_report.md`
+- `daily_report.json`
+- `visualization.html`
+- `harness_result.json`
+- `harness_result.md`
+
+### 3.4 每日自动更新 + 与上一日报对比
 
 ```bash
 python src/daily_update.py --max-items 20 --per-source-limit 8 --min-required 10 --min-relevance-score 2 --min-per-source 2 --extract-batch-size 5 --extract-mode hybrid --log-level INFO
@@ -178,7 +220,7 @@ python src/main.py --log-level DEBUG
 
 ## 7. 阅读文档
 
-- 大厂文档对标：`docs/ENTERPRISE_DOC_BENCHMARK.md`
+- 文档编写与评审标准：`docs/DOCUMENTATION_STANDARDS.md`
 - 技术运行手册：`docs/TECHNICAL_RUNBOOK.md`
 - 系统与流程：`docs/PROJECT_DOCUMENTATION.md`
 - Schema设计：`docs/SCHEMA_DESIGN.md`
